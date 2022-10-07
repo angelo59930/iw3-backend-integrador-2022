@@ -8,9 +8,15 @@ En este repositorio se podra observar todo el avance del trabajo integrador corr
 - 👨‍💻[Yanes Kevin](https://github.com/kyanesdev)
 - 👨‍💻[Zamora Facundo](https://github.com/Faq-hue)
   
-## Dependencias utilizadas
+## [Backend]Dependencias utilizadas
 
 - :dart: Spring
 - :dart: Lombok
 - :dart: JPA
 - :dart: MySql
+
+## [Frontend]Framework y librerias 
+
+- :dart: Vue.js
+- :dart: Axios
+- :dart: PrimeVue
