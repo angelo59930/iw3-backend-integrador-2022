@@ -4,13 +4,13 @@ En este repositorio se podra observar todo el avance del trabajo integrador corr
 
 ## Colaboladores / Integrantes
 
-- [Manfredi Angelo](https://github.com/angelo59930)
-- [Yanes Kevin](https://github.com/kyanesdev)
-- [Zamora Facundo](https://github.com/Faq-hue)
+👨‍💻 [Manfredi Angelo](https://github.com/angelo59930)<br />
+👨‍💻 [Yanes Kevin](https://github.com/kyanesdev)<br />
+👨‍💻 [Zamora Facundo](https://github.com/Faq-hue)
   
 ## Dependencias utilizadas
 
-- Spring
-- Lombok
-- JPA
-- MySql
+:dart: Spring <br />
+:dart: Lombok <br />
+:dart: JPA <br />
+:dart: MySql
