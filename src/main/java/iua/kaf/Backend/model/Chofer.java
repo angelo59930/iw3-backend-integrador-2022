@@ -32,4 +32,5 @@ public class Chofer {
 	
 	@Column(unique = true, nullable = false)
 	private long dni;
+	
 }
