@@ -18,19 +18,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chofer {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(unique = false, nullable = false)
-	private String nombre;
-	
-	@Column(unique = false, nullable = false)
-	private String apellido;
-	
-	@Column(unique = true, nullable = false)
-	private long dni;
-	
+public class Producto {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Column(unique = false, nullable = false)
+  private String nombre;
+
+  @Column(unique = false, nullable = false)
+  private String descripcion;
+  
 }
