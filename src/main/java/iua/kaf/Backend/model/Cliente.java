@@ -25,6 +25,9 @@ public class Cliente {
   private long id;
 
   @Column(unique = false, nullable = false)
+  private String nombre;
+  
+  @Column(unique = false, nullable = false)
   private String razonSocial;
   
   @Column(unique = false, nullable = false)
