@@ -3,6 +3,9 @@ package iua.kaf.Backend.model.business;
 import java.util.List;
 
 import iua.kaf.Backend.model.Cliente;
+import iua.kaf.Backend.model.business.exeptions.BusinessException;
+import iua.kaf.Backend.model.business.exeptions.FoundException;
+import iua.kaf.Backend.model.business.exeptions.NotFoundException;
 
 public interface IClienteBusiness {
 
@@ -10,7 +13,6 @@ public interface IClienteBusiness {
 
   public Cliente add(Cliente product) throws FoundException, BusinessException;
 
-  // TODO:PREGUNTAR SI SE PUEDE BORRAR
   public void delete(long id) throws NotFoundException, BusinessException;
 
 }
