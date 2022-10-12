@@ -47,15 +47,15 @@ public class ClienteBusiness implements IClienteBusiness {
   }
 
   @Override
-  public Cliente add(Cliente product) throws FoundException, BusinessException {
+  public Cliente add(Cliente cliente) throws FoundException, BusinessException {
     try {
-      load(product.getId());
-      throw FoundException.builder().message("Se encuentró el Producto id=" + product.getId()).build();
+      load(cliente.getId());
+      throw FoundException.builder().message("Se encuentró el cliente id=" + cliente.getId()).build();
     } catch (NotFoundException e) {
     }
 
     try {
-      return clienteDAO.save(product);
+      return clienteDAO.save(cliente);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       throw BusinessException.builder().ex(e).build();
