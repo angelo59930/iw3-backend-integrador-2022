@@ -48,15 +48,15 @@ public class CamionBusiness implements ICamionBusiness {
   }
 
   @Override
-  public Camion add(Camion product) throws FoundException, BusinessException {
+  public Camion add(Camion camion) throws FoundException, BusinessException {
     try {
-      load(product.getId());
-      throw FoundException.builder().message("Se encuentró el Producto id=" + product.getId()).build();
+      load(camion.getId());
+      throw FoundException.builder().message("Se encuentró el Producto id=" + camion.getId()).build();
     } catch (NotFoundException e) {
     }
 
     try {
-      return camionDAO.save(product);
+      return camionDAO.save(camion);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       throw BusinessException.builder().ex(e).build();
@@ -64,10 +64,10 @@ public class CamionBusiness implements ICamionBusiness {
   }
 
   @Override
-  public Camion update(Camion product) throws NotFoundException, BusinessException {
-    load(product.getId());
+  public Camion update(Camion camion) throws NotFoundException, BusinessException {
+    load(camion.getId());
     try {
-      return camionDAO.save(product);
+      return camionDAO.save(camion);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       throw BusinessException.builder().ex(e).build();
