@@ -9,6 +9,8 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 
 public interface ICamionBusiness {
 
+  public Camion load(long id) throws NotFoundException, BusinessException;
+
   public List<Camion> list() throws BusinessException;
 
   public Camion add(Camion product) throws FoundException, BusinessException;
