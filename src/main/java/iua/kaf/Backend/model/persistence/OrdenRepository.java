@@ -2,9 +2,9 @@ package iua.kaf.Backend.model.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import iua.kaf.Backend.model.Camion;
+import iua.kaf.Backend.model.Orden;
 
 @Repository
-public interface CamionRepository extends JpaRepository<Camion, Long>{
-	
+public interface OrdenRepository extends JpaRepository<Orden, Long> {
+
 }
