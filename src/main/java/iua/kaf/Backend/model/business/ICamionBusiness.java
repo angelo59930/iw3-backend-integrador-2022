@@ -9,13 +9,13 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 
 public interface ICamionBusiness {
 
-  public Camion load(long id) throws NotFoundException, BusinessException;
+    public Camion load(long id) throws NotFoundException, BusinessException;
 
-  public List<Camion> list() throws BusinessException;
+    public List<Camion> list() throws BusinessException;
 
-  public Camion add(Camion product) throws FoundException, BusinessException;
+    public Camion add(Camion camion) throws FoundException, BusinessException;
 
-  public Camion update(Camion product) throws NotFoundException, BusinessException;
+    public Camion update(Camion camion) throws NotFoundException, BusinessException;
 
-  public void delete(long id) throws NotFoundException, BusinessException;
+    public void delete(long id) throws NotFoundException, BusinessException;
 }
