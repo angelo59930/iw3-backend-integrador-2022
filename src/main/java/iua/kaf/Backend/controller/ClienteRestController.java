@@ -37,7 +37,7 @@ public class ClienteRestController {
 			
 			Cliente response = clienteBusiness.add(cliente);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_ORDEN + "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_CLIENTES + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {
