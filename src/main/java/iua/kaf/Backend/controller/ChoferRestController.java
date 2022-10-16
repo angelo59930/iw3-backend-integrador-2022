@@ -21,7 +21,7 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
-@RequestMapping(Constantes.URL_CHOFERES)
+@RequestMapping(Constantes.URL_CHOFER)
 public class ChoferRestController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class ChoferRestController {
 			
 			Chofer response = choferBusiness.add(chofer);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_CHOFERES+ "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_CHOFER+ "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {

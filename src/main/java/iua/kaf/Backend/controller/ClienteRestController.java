@@ -20,7 +20,7 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
-@RequestMapping(Constantes.URL_CLIENTES)
+@RequestMapping(Constantes.URL_CLIENTE)
 public class ClienteRestController {
   
 
@@ -37,7 +37,7 @@ public class ClienteRestController {
 			
 			Cliente response = clienteBusiness.add(cliente);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_CLIENTES + "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_CLIENTE + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {
