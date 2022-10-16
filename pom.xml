@@ -52,7 +52,82 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	
+			<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+	
 	</dependencies>
+	
+
+	<profiles>
+		<!-- Perfiles de ejecución -->
+		<profile>
+			<id>cli1</id>
+			<properties>
+				<spring.profiles.active>cli1</spring.profiles.active>
+			</properties>
+		</profile>
+
+		<!-- Perfiles de empaquetado -->
+		<profile>
+			<id>war-build</id>
+			<properties>
+				<packaging.type>war</packaging.type>
+				<tomcat.scope>provided</tomcat.scope>
+			</properties>
+			<activation>
+				<property>
+					<name>build</name>
+					<value>war</value>
+				</property>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<finalName>ROOT</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>repackage</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jar-build</id>
+			<properties>
+				<packaging.type>jar</packaging.type>
+				<tomcat.scope>
+					compile</tomcat.scope>
+			</properties>
+			<activation>
+				<property>
+					<name>build</name>
+					<value>jar</value>
+				</property>
+			</activation>
+			<build>
+				<finalName>iw3</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
