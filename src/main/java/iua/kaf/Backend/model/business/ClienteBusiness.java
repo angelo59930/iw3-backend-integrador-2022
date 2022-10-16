@@ -17,60 +17,60 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ClienteBusiness implements IClienteBusiness {
 
-    @Autowired
-    private ClienteRepository clienteDAO;
+  @Autowired
+  private ClienteRepository clienteDAO;
 
-    @Override
-    public Cliente load(long id) throws NotFoundException, BusinessException {
-        Optional<Cliente> r;
-        try {
-            r = clienteDAO.findById(id);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
-        if (r.isEmpty()) {
-            throw NotFoundException.builder().message("No se encuentra el cliente con id=" + id).build();
-        }
-
-        return r.get();
+  @Override
+  public Cliente load(long id) throws NotFoundException, BusinessException {
+    Optional<Cliente> r;
+    try {
+      r = clienteDAO.findById(id);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
+    }
+    if (r.isEmpty()) {
+      throw NotFoundException.builder().message("No se encuentra el cliente id=" + id).build();
     }
 
-    @Override
-    public List<Cliente> list() throws BusinessException {
-        try {
-            return clienteDAO.findAll();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+    return r.get();
+  }
+
+  @Override
+  public List<Cliente> list() throws BusinessException {
+    try {
+      return clienteDAO.findAll();
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
+    }
+  }
+
+  @Override
+  public Cliente add(Cliente cliente) throws FoundException, BusinessException {
+    try {
+      load(cliente.getId());
+      throw FoundException.builder().message("Se encuentró el cliente id=" + cliente.getId()).build();
+    } catch (NotFoundException e) {
     }
 
-    @Override
-    public Cliente add(Cliente cliente) throws FoundException, BusinessException {
-        try {
-            load(cliente.getId());
-            throw FoundException.builder().message("Se encontró el cliente con id=" + cliente.getId()).build();
-        } catch (NotFoundException e) {
-        }
-
-        try {
-            return clienteDAO.save(cliente);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+    try {
+      return clienteDAO.save(cliente);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
     }
+  }
 
-    @Override
-    public void delete(long id) throws NotFoundException, BusinessException {
-        load(id);
-        try {
-            clienteDAO.deleteById(id);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+  @Override
+  public void delete(long id) throws NotFoundException, BusinessException {
+    load(id);
+    try {
+      clienteDAO.deleteById(id);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
     }
+  }
 
 }
