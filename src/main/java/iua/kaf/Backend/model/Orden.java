@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +32,6 @@ public class Orden {
 	@Column(unique = true, nullable = false)
 	private long numeroOrden;
 
-	// fecha de recepcion del sistema externo
 	@Column(nullable = false)
 	private Date fechaRecepcionExt;
 
@@ -63,9 +63,10 @@ public class Orden {
 	@JoinColumn(name = "id_producto", nullable = false)
 	private Producto producto;
 
-	// FIXME: Asignar la columna correspondiente
-	private int estado;
+	@OneToOne()
+	@JoinColumn(name = "id_detalle", nullable = false)
+	private Detalle detalle;
 
-	// TODO: IMPLEMENTAR DATOS DE CARGA
+	private int estado;
 
 }
