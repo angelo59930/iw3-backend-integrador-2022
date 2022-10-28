@@ -27,8 +27,6 @@ public class OrdenJsonSerializer extends StdSerializer<Orden>{
 		gen.writeObjectField("finCarga", value.getFechaFinCarga());
 		gen.writeObjectField("pesajeFinal", value.getFechaPesajeFinal());
 		gen.writeObjectField("estado", value.getEstado());
-		
-		//TODO ¿me interesa saber los ids de camion, chofer, cliente y producto?
 		gen.writeObjectField("Camion", value.getCamion());
 		gen.writeObjectField("Chofer", value.getChofer());
 		gen.writeObjectField("Cliente", value.getCliente());

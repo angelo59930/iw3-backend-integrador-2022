@@ -29,8 +29,6 @@ public class ProductoRestController {
 	@Autowired
 	private IProductoBusiness productoBusiness;
 	
-	//TODO delete, load, list
-	
 	@PostMapping(value = "")
 	public ResponseEntity<?> add(@RequestBody Producto producto){
 		
