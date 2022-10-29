@@ -2,11 +2,8 @@ package iua.kaf.Backend.model.business;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import iua.kaf.Backend.model.Cliente;
 import iua.kaf.Backend.model.Detalle;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
