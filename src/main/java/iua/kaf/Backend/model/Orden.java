@@ -46,6 +46,13 @@ public class Orden {
 
 	@Column(nullable = false)
 	private Date fechaPesajeFinal;
+	
+	@Column(nullable = false)
+	private Long tara;
+	
+	//Solo 5 digitos como maximo
+	@Column(nullable = false)
+	private int password;
 
 	@ManyToOne
 	@JoinColumn(name = "id_camion", nullable = false)

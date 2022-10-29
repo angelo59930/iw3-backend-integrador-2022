@@ -111,4 +111,12 @@ public class OrdenRestController {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
+	
+	private void cambiadorDeEstados(Orden orden){
+		
+		
+		
+		
+	}
+	
 }
