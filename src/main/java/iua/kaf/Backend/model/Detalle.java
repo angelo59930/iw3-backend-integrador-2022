@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,8 @@ public class Detalle {
   private double caudal;
   @Column(nullable = true)
   private int estado;
-
+  @Transient
+  private int cantidadActualizaciones = 1;
   @OneToOne()
   @JoinColumn(name="id_orden",nullable = false)
   private Orden orden;

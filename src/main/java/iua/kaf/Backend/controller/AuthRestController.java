@@ -2,9 +2,7 @@ package iua.kaf.Backend.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import iua.kaf.Backend.auth.User;
-import iua.kaf.Backend.auth.UserBusiness;
 import iua.kaf.Backend.auth.UserSlimJsonSerializer;
 import iua.kaf.Backend.auth.custom.CustomAuthenticationManager;
 import iua.kaf.Backend.auth.filters.AuthConstants;
@@ -22,7 +20,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
