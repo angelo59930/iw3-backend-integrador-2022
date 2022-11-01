@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import iua.kaf.Backend.model.Orden;
-import iua.kaf.Backend.model.business.IOrdenBusiness;
+import iua.kaf.Backend.model.Conciliacion;
+import iua.kaf.Backend.model.business.IConciliacionBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
-@RequestMapping(Constantes.URL_ORDEN)
-public class OrdenRestController {
-  
+@RequestMapping(Constantes.URL_CONCILIACION)
+public class ConciliacionRestController {
+	
 	@Autowired
 	private IStandardResponseBusiness responseBusiness;
 	
 	@Autowired
-	private IOrdenBusiness ordenBusiness;
+	private IConciliacionBusiness conciliacionBusiness;
 	
 	@PostMapping(value = "")
-	public ResponseEntity<?> add(@RequestBody Orden orden){
+	public ResponseEntity<?> add(@RequestBody Conciliacion conciliacion){
 		
 		try {
 			
-			Orden response = ordenBusiness.add(orden);
+			Conciliacion response = conciliacionBusiness.add(conciliacion);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_ORDEN + "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_CONCILIACION + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {
@@ -51,11 +51,11 @@ public class OrdenRestController {
 	}
 	
 	@PutMapping(value = "")
-	public ResponseEntity<?> update(@RequestBody Orden orden){
+	public ResponseEntity<?> update(@RequestBody Conciliacion conciliacion){
 		
 		try {
 			
-			ordenBusiness.update(orden);
+			conciliacionBusiness.update(conciliacion);
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 		} catch (NotFoundException e) {
@@ -72,7 +72,7 @@ public class OrdenRestController {
 		
 		try {
 			
-			ordenBusiness.delete(id);
+			conciliacionBusiness.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 
@@ -90,7 +90,7 @@ public class OrdenRestController {
 		
 		try {
 			
-			return new ResponseEntity<>(ordenBusiness.load(id), HttpStatus.OK);
+			return new ResponseEntity<>(conciliacionBusiness.load(id), HttpStatus.OK);
 			
 
 		} catch (NotFoundException e) {
@@ -106,11 +106,10 @@ public class OrdenRestController {
 	public ResponseEntity<?> list(){
 		
 		try {
-			return new ResponseEntity<>(ordenBusiness.list(), HttpStatus.OK);
+			return new ResponseEntity<>(conciliacionBusiness.list(), HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
 	}
-	
-	
+
 }
