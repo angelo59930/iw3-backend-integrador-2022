@@ -92,5 +92,16 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 		}
 		
 	}
+	
+	public void calculos(long id) {
+		
+		Conciliacion conc = conciliacionDAO.getById(id);
+		
+		conc.setNetoPorBalanza(conc.getPesajeFinal() - conc.getPesajeInicial());
+		
+		conc.setDiferenciaBalanzaCaudalimetro(conc.getNetoPorBalanza() - conc.getProductoCargado());
+		
+		//TODO promedioDensidad y promedioCaudal
+	}
 
 }
