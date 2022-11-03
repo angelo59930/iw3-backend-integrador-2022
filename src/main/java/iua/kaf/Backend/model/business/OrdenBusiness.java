@@ -84,5 +84,12 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
 
     }
+    
+    private void cambiarEstado(long id) {
+    	
+    	if(ordenDAO.getById(id).getEstado() < 4)
+    	ordenDAO.getById(id).setEstado(ordenDAO.getById(id).getEstado()+1);;
+    	
+    }
 
 }
