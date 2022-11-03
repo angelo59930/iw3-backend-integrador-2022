@@ -73,14 +73,20 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        load(orden.getId());
-        try {
-        	orden.setEstado(2);
-            return ordenDAO.save(orden);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+        
+    	if(orden.getEstado() > 1 && orden.getEstado() < 3) {
+    	
+    		load(orden.getId());
+            try {
+            	orden.setEstado(2);
+                return ordenDAO.save(orden);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw BusinessException.builder().ex(e).build();
+            }
+    	}
+    	return null;
+    	
     }
 
     @Override
