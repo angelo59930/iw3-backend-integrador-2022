@@ -74,7 +74,7 @@ public class OrdenBusiness implements IOrdenBusiness {
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
         
-    	if(orden.getEstado() > 1 && orden.getEstado() < 3) {
+    	if(orden.getEstado() == 1 || orden.getEstado < 3) {
     	
     		load(orden.getId());
             try {
@@ -100,12 +100,5 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
 
     }
-    
-    /*private void cambiarEstado(long id) {
-    	
-    	if(ordenDAO.getById(id).getEstado() < 4)
-    	ordenDAO.getById(id).setEstado(ordenDAO.getById(id).getEstado()+1);;
-    	
-    }*/
 
 }
