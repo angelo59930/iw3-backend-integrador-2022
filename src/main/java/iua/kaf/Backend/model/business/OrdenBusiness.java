@@ -48,24 +48,34 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden add(Orden orden) throws FoundException, BusinessException {
-        try {
-            load(orden.getId());
-            throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
-        } catch (NotFoundException e) {
-        }
+        
+    	if(orden.getEstado() < 1) {
+    		
+        	try {
+                load(orden.getId());
+                throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
+            } catch (NotFoundException e) {
+            }
 
-        try {
-            return ordenDAO.save(orden);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+            try {
+            	orden.setEstado(1);
+                return ordenDAO.save(orden);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw BusinessException.builder().ex(e).build();
+            }
+    		
+    	} else {
+    		
+    		return null;
+    	}
     }
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
         load(orden.getId());
         try {
+        	orden.setEstado(2);
             return ordenDAO.save(orden);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -85,11 +95,11 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     }
     
-    private void cambiarEstado(long id) {
+    /*private void cambiarEstado(long id) {
     	
     	if(ordenDAO.getById(id).getEstado() < 4)
     	ordenDAO.getById(id).setEstado(ordenDAO.getById(id).getEstado()+1);;
     	
-    }
+    }*/
 
 }

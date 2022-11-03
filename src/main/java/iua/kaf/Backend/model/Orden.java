@@ -74,6 +74,6 @@ public class Orden {
 	@JoinColumn(name = "id_detalle", nullable = false)
 	private Detalle detalle;
 
-	private int estado;
+	private int estado = 0;
 
 }
