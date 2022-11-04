@@ -32,22 +32,22 @@ public class Orden {
 	@Column(unique = true, nullable = false)
 	private long numeroOrden;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaRecepcionExt;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaRecepcionPesaje;
 
 	@Column(nullable = false)
 	private Date fechaInicioCarga;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaFinCarga;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaPesajeFinal;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Long tara;
 	
 	//Solo 5 digitos como maximo
@@ -73,7 +73,5 @@ public class Orden {
 	@OneToOne()
 	@JoinColumn(name = "id_detalle", nullable = false)
 	private Detalle detalle;
-
-	private int estado = 0;
 
 }

@@ -43,7 +43,7 @@ public class Detalle {
   private int estado;
 
   @Column(nullable = true)
-  private int cantidadActualizaciones = 1;
+  private int cantidadActualizaciones;
 
   @OneToOne()
   @JoinColumn(name = "id_orden", nullable = false)

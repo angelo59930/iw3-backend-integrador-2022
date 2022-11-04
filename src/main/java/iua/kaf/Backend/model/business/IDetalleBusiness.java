@@ -1,6 +1,8 @@
 package iua.kaf.Backend.model.business;
 
 import java.util.List;
+import java.util.Optional;
+
 import iua.kaf.Backend.model.Detalle;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
@@ -16,5 +18,5 @@ public interface IDetalleBusiness {
 
   public Detalle update(Detalle detalle) throws NotFoundException, BusinessException;
 
-  public Detalle closDetalle(long id) throws NotFoundException, BusinessException;
+  public Optional<Detalle> closDetalle(long id) throws NotFoundException, BusinessException;
 }

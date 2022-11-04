@@ -71,14 +71,18 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 	}
 
-	// TODO: revisar entre todos
 	@Override
-	public Detalle closDetalle(long id) throws NotFoundException, BusinessException {
-		Detalle detalle = load(id);
+	public Optional<Detalle> closDetalle(long id) throws NotFoundException, BusinessException {
+		Optional<Detalle> detalle;
+		try{
+			detalle = detalleDAO.setEstado(3, id);
+		}catch (Exception e) {
+			throw BusinessException.builder().ex(e).build();
+		}
+		if(detalle.isEmpty())
+			throw NotFoundException.builder().message("No se encontra el detalle id = " + id).build();
 
-		detalle.setEstado(3);
-
-		return update(detalle);
+		return detalle;
 	}
 
 }

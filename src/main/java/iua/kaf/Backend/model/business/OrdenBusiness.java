@@ -50,7 +50,7 @@ public class OrdenBusiness implements IOrdenBusiness {
     @Override
     public Orden add(Orden orden) throws FoundException, BusinessException {
         
-    	if(orden.getEstado() < 1) {
+    	if(orden.getDetalle().getEstado() < 1) {
     		
         	try {
                 load(orden.getId());
@@ -59,7 +59,7 @@ public class OrdenBusiness implements IOrdenBusiness {
             }
 
             try {
-            	orden.setEstado(1);
+            	orden.getDetalle().setEstado(1);
                 return ordenDAO.save(orden);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -72,12 +72,12 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        
-    	if(orden.getEstado() > 0 && orden.getEstado() < 3) {
+        int estado = orden.getDetalle().getEstado();
+    	if(estado > 0 && estado < 3) {
     	
     		load(orden.getId());
             try {
-            	orden.setEstado(2);
+            	orden.getDetalle().setEstado(2);
                 return ordenDAO.save(orden);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
