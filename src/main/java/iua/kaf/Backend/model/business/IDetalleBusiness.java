@@ -16,4 +16,5 @@ public interface IDetalleBusiness {
 
   public Detalle update(Detalle detalle) throws NotFoundException, BusinessException;
 
+  public Detalle closDetalle(long id) throws NotFoundException, BusinessException;
 }

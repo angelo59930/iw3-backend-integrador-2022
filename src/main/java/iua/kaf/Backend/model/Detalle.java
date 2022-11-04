@@ -29,19 +29,24 @@ public class Detalle {
 
   @Column(nullable = true)
   private double ultMasaAcumulada;
+  
   @Column(nullable = true)
   private double desidadProducto;
+  
   @Column(nullable = true)
   private double tempProducto;
+  
   @Column(nullable = true)
   private double caudal;
+  
   @Column(nullable = true)
   private int estado;
-  @Transient
-  private int cantidadActualizaciones = 1;
-  @OneToOne()
-  @JoinColumn(name="id_orden",nullable = false)
-  private Orden orden;
 
+  @Column(nullable = true)
+  private int cantidadActualizaciones = 1;
+
+  @OneToOne()
+  @JoinColumn(name = "id_orden", nullable = false)
+  private Orden orden;
 
 }

@@ -9,6 +9,7 @@ import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,16 +66,14 @@ public class OrdenBusiness implements IOrdenBusiness {
                 throw BusinessException.builder().ex(e).build();
             }
     		
-    	} else {
-    		
-    		return null;
-    	}
+    	} 
+    	throw BusinessException.builder().build();
     }
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
         
-    	if(orden.getEstado() == 1 || orden.getEstado < 3) {
+    	if(orden.getEstado() > 0 && orden.getEstado() < 3) {
     	
     		load(orden.getId());
             try {
@@ -85,7 +84,8 @@ public class OrdenBusiness implements IOrdenBusiness {
                 throw BusinessException.builder().ex(e).build();
             }
     	}
-    	return null;
+
+        throw BusinessException.builder().build();
     	
     }
 
