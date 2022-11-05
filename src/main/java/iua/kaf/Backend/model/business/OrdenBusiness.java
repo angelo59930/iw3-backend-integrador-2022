@@ -49,59 +49,52 @@ public class OrdenBusiness implements IOrdenBusiness {
     }
 
     public static char randomCharacter() {
-        int rand = (int)(Math.random()*10);
+        int rand = (int) (Math.random() * 10);
         int number = rand + 48;
-        return (char)(number);
+        return (char) (number);
     }
+
     @Override
     public Orden add(Orden orden) throws FoundException, BusinessException {
 
-        
-    	if(orden.getDetalle().getEstado() < 1) {
-    		
-        	try {
-                load(orden.getId());
-                throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
-            } catch (NotFoundException e) {
-            }
+        try {
+            load(orden.getId());
+            throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
+        } catch (NotFoundException e) {
+        }
 
-            try {
-            	orden.getDetalle().setEstado(1);
-                String[] randomPasswords = new String[1];
-                String randomPassword = "";
-                for(int j = 0; j < 5; j++) {
-                    randomPassword += randomCharacter();
-                }
-                randomPasswords[0] = randomPassword;
-                orden.setPassword(Integer.parseInt(Arrays.toString(randomPasswords)));
-
-                return ordenDAO.save(orden);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                throw BusinessException.builder().ex(e).build();
+        try {
+            //orden.getDetalle().setEstado(1);
+            String randomPassword = "";
+            for (int j = 0; j < 5; j++) {
+                randomPassword += randomCharacter();
             }
-    		
-    	} 
-    	throw BusinessException.builder().build();
+            orden.setPassword(Long.parseLong(randomPassword));
+
+            return ordenDAO.save(orden);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
     }
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
         int estado = orden.getDetalle().getEstado();
-    	if(estado > 0 && estado < 3) {
-    	
-    		load(orden.getId());
+        if (estado > 0 && estado < 3) {
+
+            load(orden.getId());
             try {
-            	orden.getDetalle().setEstado(2);
+                orden.getDetalle().setEstado(2);
                 return ordenDAO.save(orden);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 throw BusinessException.builder().ex(e).build();
             }
-    	}
+        }
 
         throw BusinessException.builder().build();
-    	
+
     }
 
     @Override

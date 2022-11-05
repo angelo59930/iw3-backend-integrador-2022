@@ -52,7 +52,7 @@ public class Orden {
 	
 	//Solo 5 digitos como maximo
 	@Column(nullable = false)
-	private int password;
+	private long password;
 
 	@ManyToOne
 	@JoinColumn(name = "id_camion", nullable = false)
