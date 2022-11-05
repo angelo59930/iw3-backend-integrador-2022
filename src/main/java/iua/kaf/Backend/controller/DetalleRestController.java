@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import iua.kaf.Backend.model.Detalle;
@@ -29,8 +30,8 @@ public class DetalleRestController {
 	@Autowired
 	private IDetalleBusiness detalleBusiness;
 	
-	@PutMapping()
-	public ResponseEntity<?> closeDetalle(@RequestBody long id){
+	@PutMapping(value="/{id}")
+	public ResponseEntity<?> closeDetalle(@PathVariable("id") long id){
 		try {
 			detalleBusiness.closDetalle(id);
 			return new ResponseEntity<>(HttpStatus.OK);
