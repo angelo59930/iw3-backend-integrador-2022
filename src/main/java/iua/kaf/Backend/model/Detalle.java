@@ -42,7 +42,7 @@ public class Detalle {
   private int estado;
 
   @Column(nullable = true)
-  private int password;
+  private long password;
 
   @Column(nullable = true)
   private int cantidadActualizaciones;
