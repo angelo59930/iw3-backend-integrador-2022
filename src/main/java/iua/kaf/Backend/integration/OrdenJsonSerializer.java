@@ -18,7 +18,7 @@ public class OrdenJsonSerializer extends StdSerializer<Orden>{
 
 	@Override
 	public void serialize(Orden value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-		
+
 		gen.writeStartObject();
 		gen.writeNumberField("numero", value.getNumeroOrden());
 		gen.writeObjectField("recepcionExt", value.getFechaRecepcionExt());
@@ -32,7 +32,7 @@ public class OrdenJsonSerializer extends StdSerializer<Orden>{
 		gen.writeObjectField("Chofer", value.getChofer());
 		gen.writeObjectField("Cliente", value.getCliente());
 		gen.writeObjectField("Producto", value.getProducto());
-		
-		gen.writeEndObject();		
+
+		gen.writeEndObject();
 	}
 }

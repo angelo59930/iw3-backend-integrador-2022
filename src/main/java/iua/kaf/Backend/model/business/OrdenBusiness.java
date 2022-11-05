@@ -9,6 +9,7 @@ import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,29 +49,44 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden add(Orden orden) throws FoundException, BusinessException {
-        try {
-            load(orden.getId());
-            throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
-        } catch (NotFoundException e) {
-        }
+        
+    	if(orden.getDetalle().getEstado() < 1) {
+    		
+        	try {
+                load(orden.getId());
+                throw FoundException.builder().message("Se encontró la orden con id=" + orden.getId()).build();
+            } catch (NotFoundException e) {
+            }
 
-        try {
-            return ordenDAO.save(orden);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+            try {
+            	orden.getDetalle().setEstado(1);
+                return ordenDAO.save(orden);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw BusinessException.builder().ex(e).build();
+            }
+    		
+    	} 
+    	throw BusinessException.builder().build();
     }
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        load(orden.getId());
-        try {
-            return ordenDAO.save(orden);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.builder().ex(e).build();
-        }
+        int estado = orden.getDetalle().getEstado();
+    	if(estado > 0 && estado < 3) {
+    	
+    		load(orden.getId());
+            try {
+            	orden.getDetalle().setEstado(2);
+                return ordenDAO.save(orden);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw BusinessException.builder().ex(e).build();
+            }
+    	}
+
+        throw BusinessException.builder().build();
+    	
     }
 
     @Override
