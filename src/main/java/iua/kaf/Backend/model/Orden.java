@@ -71,7 +71,7 @@ public class Orden {
 	private Producto producto;
 
 	@OneToOne()
-	@JoinColumn(name = "id_detalle", nullable = false)
+	@JoinColumn(name = "id_detalle", nullable = true)
 	private Detalle detalle;
 
 }
