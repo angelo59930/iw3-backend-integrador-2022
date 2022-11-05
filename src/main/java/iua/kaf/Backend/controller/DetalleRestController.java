@@ -30,8 +30,9 @@ public class DetalleRestController {
 	@Autowired
 	private IDetalleBusiness detalleBusiness;
 	
-	@PutMapping()
-	public ResponseEntity<?> closeDetalle(@RequestParam long id){
+
+	@PutMapping(value="/{id}")
+	public ResponseEntity<?> closeDetalle(@PathVariable("id") long id){
 		try {
 			detalleBusiness.closDetalle(id);
 			return new ResponseEntity<>(HttpStatus.OK);
