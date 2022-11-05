@@ -1,5 +1,6 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +48,14 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
     }
 
+    public static char randomCharacter() {
+        int rand = (int)(Math.random()*10);
+        int number = rand + 48;
+        return (char)(number);
+    }
     @Override
     public Orden add(Orden orden) throws FoundException, BusinessException {
+
         
     	if(orden.getDetalle().getEstado() < 1) {
     		
@@ -60,6 +67,14 @@ public class OrdenBusiness implements IOrdenBusiness {
 
             try {
             	orden.getDetalle().setEstado(1);
+                String[] randomPasswords = new String[1];
+                String randomPassword = "";
+                for(int j = 0; j < 5; j++) {
+                    randomPassword += randomCharacter();
+                }
+                randomPasswords[0] = randomPassword;
+                orden.setPassword(Integer.parseInt(Arrays.toString(randomPasswords)));
+
                 return ordenDAO.save(orden);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
