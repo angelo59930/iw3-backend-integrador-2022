@@ -2,6 +2,8 @@ package iua.kaf.Backend.model.business;
 
 import java.util.List;
 import java.util.Optional;
+
+import iua.kaf.Backend.model.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
@@ -19,8 +21,9 @@ public class DetalleBusiness implements IDetalleBusiness {
 	private DetalleRepository detalleDAO;
 
 	@Override
-	public Detalle add(Detalle detalle) throws FoundException, BusinessException {
+	public Detalle add(Detalle detalle , Orden orden) throws FoundException, BusinessException {
 		try {
+			detalle.setPassword(orden.getPassword());
 			load(detalle.getId());
 			throw FoundException.builder().message("Se encuentró el detalle id=" + detalle.getId()).build();
 		} catch (NotFoundException e) {

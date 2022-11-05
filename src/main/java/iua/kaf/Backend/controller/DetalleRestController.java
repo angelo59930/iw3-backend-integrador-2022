@@ -1,5 +1,6 @@
 package iua.kaf.Backend.controller;
 
+import iua.kaf.Backend.model.Orden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -72,11 +73,11 @@ public class DetalleRestController {
 	
 	// TODO:Preguntar si hay que cambiar con el grupo
 	@PostMapping(value="")
-    public ResponseEntity<?> add(@RequestBody Detalle detalle){
+    public ResponseEntity<?> add(@RequestBody Detalle detalle , @RequestBody Orden orden){
 		
 		try {
 			
-			Detalle response = detalleBusiness.add(detalle);
+			Detalle response = detalleBusiness.add(detalle , orden);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_DETALLE + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);

@@ -42,6 +42,9 @@ public class Detalle {
   private int estado;
 
   @Column(nullable = true)
+  private int password;
+
+  @Column(nullable = true)
   private int cantidadActualizaciones;
 
   @OneToOne()
