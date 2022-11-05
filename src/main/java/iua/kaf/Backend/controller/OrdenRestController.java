@@ -113,8 +113,24 @@ public class OrdenRestController {
 	}
 	
 	private void cambiadorDeEstados(Orden orden){
-		
-		
+
+			try {
+				orden.setEstado(1);
+
+				orden.setEstado(orden.getEstado() + 1);
+				if (orden.getEstado() == 2){
+
+
+				}
+
+
+			}catch (Exception e){
+
+			}
+
+		}
+
+
 		
 		
 	}
