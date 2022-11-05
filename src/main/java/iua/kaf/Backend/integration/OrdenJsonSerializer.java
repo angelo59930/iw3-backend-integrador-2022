@@ -32,7 +32,7 @@ public class OrdenJsonSerializer extends StdSerializer<Orden>{
 		gen.writeObjectField("Chofer", value.getChofer());
 		gen.writeObjectField("Cliente", value.getCliente());
 		gen.writeObjectField("Producto", value.getProducto());
-
+		gen.writeObjectField("Password", value.getPassword());
 		gen.writeEndObject();
 	}
 }
