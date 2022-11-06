@@ -73,11 +73,11 @@ public class DetalleRestController {
 	
 	// TODO:Preguntar si hay que cambiar con el grupo
 	@PostMapping(value="")
-    public ResponseEntity<?> add(@RequestBody Detalle detalle , @RequestBody Orden orden){
+    public ResponseEntity<?> add(@RequestBody Detalle detalle){
 		
 		try {
 			
-			Detalle response = detalleBusiness.add(detalle , orden);
+			Detalle response = detalleBusiness.add(detalle);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_DETALLE + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
