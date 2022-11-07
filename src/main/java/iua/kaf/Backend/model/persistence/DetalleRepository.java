@@ -20,7 +20,7 @@ public interface DetalleRepository extends JpaRepository<Detalle, Long> {
 
   @Transactional
   @Modifying
-  @Query(value = "SELECT * FROM detalle as d INNER JOIN ordenes as o WHERE d.id_orden = o.id AND d.id = ? AND o.password = ?", nativeQuery = true)
+  @Query(value = "SELECT * FROM detalle as d INNER JOIN ordenes as o ON d.id_orden = o.id WHERE d.id = ? AND o.password = ?", nativeQuery = true)
   public Boolean existPassword(long id, long password);
 
 }
