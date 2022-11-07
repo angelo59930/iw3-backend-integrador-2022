@@ -13,7 +13,6 @@ public class ConciliacionJsonSerializer extends StdSerializer<Conciliacion>{
 
 	protected ConciliacionJsonSerializer(Class<?> t, boolean dummy) {
 		super(t, dummy);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

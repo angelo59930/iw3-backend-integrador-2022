@@ -42,13 +42,10 @@ public class Detalle {
   private int estado;
 
   @Column(nullable = true)
-  private long password;
-
-  @Column(nullable = true)
   private int cantidadActualizaciones;
 
   @OneToOne()
-  @JoinColumn(name = "id_orden", nullable = false)
+	@JoinColumn(name = "id_orden", nullable = false)
   private Orden orden;
 
 }

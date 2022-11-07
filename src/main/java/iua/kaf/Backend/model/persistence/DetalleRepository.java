@@ -12,10 +12,9 @@ import org.springframework.stereotype.Repository;
 import iua.kaf.Backend.model.Detalle;
 
 @Repository
-public interface DetalleRepository extends JpaRepository<Detalle,Long> {
-/*  @Transactional
-  @Modifying
-  @Query(value = "UPDATE detalles SET estado = ? WHERE id = ?", nativeQuery = true)
-  public Optional<Detalle> setEstado(int estado, long id);
-*/
+public interface DetalleRepository extends JpaRepository<Detalle, Long> {
+
+  @Query(value = "SELECT * FROM ordenes as o WHERE o.id = ? AND o.password = ? ", nativeQuery = true)
+  public Optional<Object> existPassword(long id, long password);
+
 }

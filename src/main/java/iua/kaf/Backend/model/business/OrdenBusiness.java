@@ -1,6 +1,5 @@
 package iua.kaf.Backend.model.business;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,20 +79,20 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        int estado = orden.getDetalle().getEstado();
-        if (estado > 0 && estado < 3) {
+        //int estado = orden.getDetalle().getEstado();
+        //if (estado > 0 && estado < 3) {
 
             load(orden.getId());
             try {
-                orden.getDetalle().setEstado(2);
+          //      orden.getDetalle().setEstado(2);
                 return ordenDAO.save(orden);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 throw BusinessException.builder().ex(e).build();
             }
-        }
+        //}
 
-        throw BusinessException.builder().build();
+        //throw BusinessException.builder().build();
 
     }
 
