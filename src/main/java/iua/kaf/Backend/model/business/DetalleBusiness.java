@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
 import iua.kaf.Backend.model.business.exception.BusinessException;
+import iua.kaf.Backend.model.business.exception.ForbiddenException;
 import iua.kaf.Backend.model.business.exception.FoundException;
+import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,14 +22,21 @@ public class DetalleBusiness implements IDetalleBusiness {
 	private DetalleRepository detalleDAO;
 
 	@Override
-	public Detalle add(Detalle detalle) throws FoundException, BusinessException {
+	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
 		try {
 			load(detalle.getId());
 			throw FoundException.builder().message("Se encuentró el detalle id=" + detalle.getId()).build();
 		} catch (NotFoundException e) {
 		}
+
+		if (detalleDAO.existPassword(detalle.getOrden().getId(), password).isEmpty()) {
+			throw ForbiddenException.builder().build();
+		}
+
 		try {
+
 			return detalleDAO.save(detalle);
+
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw BusinessException.builder().ex(e).build();
@@ -62,8 +71,26 @@ public class DetalleBusiness implements IDetalleBusiness {
 	}
 
 	@Override
-	public Detalle update(Detalle detalle) throws NotFoundException, BusinessException {
-		load(detalle.getId());
+	public Detalle update(Detalle detalle) throws NotFoundException, BusinessException, NotAcceptableException {
+		Detalle d = load(detalle.getId());
+
+		if(d.getEstado() >= 3){
+			throw NotAcceptableException.builder().message("El detalle se encuentra en estado 3 o 4").build();
+		}	
+
+		try {
+			return detalleDAO.save(detalle);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw BusinessException.builder().ex(e).build();
+		}
+	}
+
+	@Override
+	public Detalle update(Detalle detalle, int estado) throws NotFoundException, BusinessException{
+
+		detalle.setEstado(3);
+
 		try {
 			return detalleDAO.save(detalle);
 		} catch (Exception e) {
@@ -74,9 +101,12 @@ public class DetalleBusiness implements IDetalleBusiness {
 
 
 	@Override
-	public Optional<Detalle> closDetalle(long id) throws NotFoundException, BusinessException {
+	public Detalle closDetalle(long id) throws NotFoundException, BusinessException {
 
-		return detalleDAO.setEstado(3, id);
+		Detalle d = load(id);
+		this.update(d, 3);
+		
+		return d;
 	}
 
 }

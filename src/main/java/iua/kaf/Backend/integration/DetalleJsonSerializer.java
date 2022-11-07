@@ -25,7 +25,6 @@ public class DetalleJsonSerializer extends StdSerializer<Detalle> {
         gen.writeNumberField("TemperaturaProducto" , value.getDesidadProducto());
         gen.writeNumberField("Caudal" , value.getCaudal());
         gen.writeNumberField("Estado" , value.getEstado());
-        gen.writeNumberField("Password" , value.getPassword());
         gen.writeNumberField("CantidadActualizaciones" , value.getCantidadActualizaciones());
         gen.writeEndObject();
     }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -40,9 +42,10 @@ public class Detalle {
   private int estado;
 
   @Column(nullable = true)
-  private long password;
-
-  @Column(nullable = true)
   private int cantidadActualizaciones;
+
+  @OneToOne()
+	@JoinColumn(name = "id_orden", nullable = false)
+  private Orden orden;
 
 }
