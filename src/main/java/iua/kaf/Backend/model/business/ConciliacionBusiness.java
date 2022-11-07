@@ -3,6 +3,8 @@ package iua.kaf.Backend.model.business;
 import java.util.List;
 import java.util.Optional;
 
+import java.math.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,17 +57,14 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 
 	@Override
 	public Conciliacion add(Conciliacion conciliacion) throws FoundException, BusinessException {
-		/*try {
+		try {
 			load(conciliacion.getId());
 			throw FoundException.builder().message("Se encontro la conciliacion con Id " + conciliacion.getId()).build();
 		} catch (NotFoundException e) {
 		}
-		*/
+	
 		try {
-
-			this.calculos(conciliacion);
-
-
+			conciliacion = this.calculos(conciliacion);
 			return conciliacionDAO.save(conciliacion);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -109,16 +108,18 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 	 * promedio de caudal = total / cant actualizaciones
 	 * promedio de densidad = total / cant actualizaciones
 	 * */
-	private void calculos(Conciliacion conciliacion) throws NotFoundException, BusinessException {
+	private Conciliacion calculos(Conciliacion conciliacion) throws NotFoundException, BusinessException {
 		Detalle d = detalleBusiness.load(conciliacion.getDetalle().getId());
-		
-		conciliacion.setNetoPorBalanza(conciliacion.getPesajeFinal() - conciliacion.getPesajeInicial());
+		int tmp = d.getCantidadActualizaciones();
 
 
-		conciliacion.setDiferenciaBalanzaCaudalimetro(conciliacion.getNetoPorBalanza() - conciliacion.getProductoCargado());
-		
+		conciliacion.setNetoPorBalanza(Math.abs(conciliacion.getPesajeFinal() - conciliacion.getPesajeInicial()));
+		conciliacion.setDiferenciaBalanzaCaudalimetro(Math.abs(conciliacion.getNetoPorBalanza() - d.getUltMasaAcumulada()));
+		conciliacion.setPromedioTemperatura(Math.abs(d.getTempProducto() / tmp));
+		conciliacion.setPromedioCaudal(Math.abs(d.getCaudal() / tmp));
+		conciliacion.setPromedioDensidad(Math.abs(d.getDesidadProducto() / tmp));
 
-
+		return conciliacion;
 	}
 
 }

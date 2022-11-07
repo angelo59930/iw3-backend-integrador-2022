@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,34 +29,34 @@ public class Conciliacion {
 	private long id;
 	
 	@Column(nullable = false)
-	private long pesajeInicial;
+	private double pesajeInicial;
 	
 	@Column(nullable = false)
-	private long pesajeFinal;
+	private double pesajeFinal;
 	
 	//ultimo valor de masa acumulada
 	@Column(nullable = true)
-	private long productoCargado;
+	private double productoCargado;
 	
 	//pesajeFinal - pesajeInicial
 	@Column(nullable = true)
-	private long netoPorBalanza;
+	private double netoPorBalanza;
 	
 	//netoPorBalanza - productoCargado
 	@Column(nullable = true)
-	private long diferenciaBalanzaCaudalimetro;
+	private double diferenciaBalanzaCaudalimetro;
 	
 	//calculado en base al detalle de orden
 	@Column(nullable = true)
-	private long promedioTemperatura;
+	private double promedioTemperatura;
 	
 	//calculado en base al detalle de orden
 	@Column(nullable = true)
-	private long promedioDensidad;
+	private double promedioDensidad;
 	
 	//calculado en base al detalle de orden
 	@Column(nullable = true)
-	private long promedioCaudal;
+	private double promedioCaudal;
 
 	@OneToOne()
 	@JoinColumn(name = "id_detalle", nullable = false)
