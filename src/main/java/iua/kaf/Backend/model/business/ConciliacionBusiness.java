@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import iua.kaf.Backend.model.Conciliacion;
+import iua.kaf.Backend.model.Detalle;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
@@ -19,6 +20,9 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 	
 	@Autowired
 	private ConciliacionRepository conciliacionDAO;
+
+	@Autowired
+	private IDetalleBusiness detalleBusiness;
 	
 	@Override
 	public Conciliacion load(long id) throws NotFoundException, BusinessException {
@@ -51,13 +55,17 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 
 	@Override
 	public Conciliacion add(Conciliacion conciliacion) throws FoundException, BusinessException {
-		try {
+		/*try {
 			load(conciliacion.getId());
 			throw FoundException.builder().message("Se encontro la conciliacion con Id " + conciliacion.getId()).build();
 		} catch (NotFoundException e) {
 		}
-		
+		*/
 		try {
+
+			this.calculos(conciliacion);
+
+
 			return conciliacionDAO.save(conciliacion);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -93,15 +101,24 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 		
 	}
 	
-	public void calculos(long id) {
+
+	/* neto por balanza = pesFinal - pesInicial
+	 * producto Cargado = masa acumulada
+	 * diferencia entre balanza y caudalimetro = netoBalanza - prodCargado
+	 * promedio de temp = total / cant actualizaciones
+	 * promedio de caudal = total / cant actualizaciones
+	 * promedio de densidad = total / cant actualizaciones
+	 * */
+	private void calculos(Conciliacion conciliacion) throws NotFoundException, BusinessException {
+		Detalle d = detalleBusiness.load(conciliacion.getDetalle().getId());
 		
-		Conciliacion conc = conciliacionDAO.getById(id);
+		conciliacion.setNetoPorBalanza(conciliacion.getPesajeFinal() - conciliacion.getPesajeInicial());
+
+
+		conciliacion.setDiferenciaBalanzaCaudalimetro(conciliacion.getNetoPorBalanza() - conciliacion.getProductoCargado());
 		
-		conc.setNetoPorBalanza(conc.getPesajeFinal() - conc.getPesajeInicial());
-		
-		conc.setDiferenciaBalanzaCaudalimetro(conc.getNetoPorBalanza() - conc.getProductoCargado());
-		
-		//TODO promedioDensidad y promedioCaudal
+
+
 	}
 
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -31,26 +33,33 @@ public class Conciliacion {
 	private long pesajeFinal;
 	
 	//ultimo valor de masa acumulada
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long productoCargado;
 	
 	//pesajeFinal - pesajeInicial
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long netoPorBalanza;
 	
 	//netoPorBalanza - productoCargado
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long diferenciaBalanzaCaudalimetro;
 	
 	//calculado en base al detalle de orden
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long promedioTemperatura;
 	
 	//calculado en base al detalle de orden
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long promedioDensidad;
 	
 	//calculado en base al detalle de orden
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long promedioCaudal;
+
+	@OneToOne()
+	@JoinColumn(name = "id_detalle", nullable = false)
+	private Detalle detalle;
+
+
+
 }
