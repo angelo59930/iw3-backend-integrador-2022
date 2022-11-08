@@ -13,7 +13,6 @@
 	<artifactId>Backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Backend</name>
-	<packaging>war</packaging>
 	<description>proyecto iw3 integrado 2022</description>
 	<properties>
 		<java.version>11</java.version>
