@@ -3,8 +3,6 @@ package iua.kaf.Backend.model.business;
 import java.util.List;
 import java.util.Optional;
 
-import java.math.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +12,7 @@ import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.ConciliacionRepository;
+import iua.kaf.Backend.model.persistence.DetalleRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -25,6 +24,9 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 
 	@Autowired
 	private IDetalleBusiness detalleBusiness;
+
+	@Autowired
+	private DetalleRepository detalleDAO;
 	
 	@Override
 	public Conciliacion load(long id) throws NotFoundException, BusinessException {
@@ -111,7 +113,8 @@ public class ConciliacionBusiness implements IConciliacionBusiness{
 	private Conciliacion calculos(Conciliacion conciliacion) throws NotFoundException, BusinessException {
 		Detalle d = detalleBusiness.load(conciliacion.getDetalle().getId());
 		int tmp = d.getCantidadActualizaciones();
-
+		d.setEstado(4);
+		detalleDAO.save(d);
 
 		conciliacion.setNetoPorBalanza(Math.abs(conciliacion.getPesajeFinal() - conciliacion.getPesajeInicial()));
 		conciliacion.setDiferenciaBalanzaCaudalimetro(Math.abs(conciliacion.getNetoPorBalanza() - d.getUltMasaAcumulada()));
