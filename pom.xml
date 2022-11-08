@@ -103,30 +103,6 @@
 				</plugins>
 			</build>
 		</profile>
-
-		<profile>
-			<id>jar-build</id>
-			<properties>
-				<packaging.type>jar</packaging.type>
-				<tomcat.scope>
-					compile</tomcat.scope>
-			</properties>
-			<activation>
-				<property>
-					<name>build</name>
-					<value>jar</value>
-				</property>
-			</activation>
-			<build>
-				<finalName>iw3</finalName>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 
 	<build>
