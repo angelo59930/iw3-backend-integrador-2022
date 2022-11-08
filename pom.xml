@@ -105,16 +105,16 @@
 		</profile>
 
 		<profile>
-			<id>war-build</id>
+			<id>jar-build</id>
 			<properties>
-				<packaging.type>war</packaging.type>
+				<packaging.type>jar</packaging.type>
 				<tomcat.scope>
 					compile</tomcat.scope>
 			</properties>
 			<activation>
 				<property>
 					<name>build</name>
-					<value>war</value>
+					<value>jar</value>
 				</property>
 			</activation>
 			<build>
@@ -127,7 +127,6 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
 
 	<build>
 		<plugins>
