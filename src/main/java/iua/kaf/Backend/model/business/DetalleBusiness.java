@@ -77,7 +77,16 @@ public class DetalleBusiness implements IDetalleBusiness {
 		if(d.getEstado() >= 3){
 			throw NotAcceptableException.builder().message("El detalle se encuentra en estado 3 o 4").build();
 		}	
-
+		
+		if(detalle.getCaudal() <= 0) {
+			throw NotAcceptableException.builder().message("El caudal es menor o igual a 0").build();
+		}
+		
+		//masa acumulada anterior > masa acumulada actual
+		if(d.getUltMasaAcumulada() > detalle.getUltMasaAcumulada()) {
+			throw NotAcceptableException.builder().message("La ultima masa acumulada es menor a la masa acumulada anterior").build();
+		}
+		
 		try {
 			return detalleDAO.save(detalle);
 		} catch (Exception e) {
