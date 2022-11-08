@@ -6,6 +6,5 @@ import iua.kaf.Backend.model.Camion;
 
 @Repository
 public interface CamionRepository extends JpaRepository<Camion, Long>{
-
 	
 }

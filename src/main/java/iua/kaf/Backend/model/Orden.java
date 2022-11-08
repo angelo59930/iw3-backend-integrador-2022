@@ -31,21 +31,27 @@ public class Orden {
 	@Column(unique = true, nullable = false)
 	private long numeroOrden;
 
-	// fecha de recepcion del sistema externo
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaRecepcionExt;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaRecepcionPesaje;
 
 	@Column(nullable = false)
 	private Date fechaInicioCarga;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaFinCarga;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaPesajeFinal;
+	
+	@Column(nullable = true)
+	private Long tara;
+	
+	//Solo 5 digitos como maximo
+	@Column(nullable = false)
+	private long password;
 
 	@ManyToOne
 	@JoinColumn(name = "id_camion", nullable = false)
@@ -62,10 +68,5 @@ public class Orden {
 	@ManyToOne
 	@JoinColumn(name = "id_producto", nullable = false)
 	private Producto producto;
-
-	// FIXME: Asignar la columna correspondiente
-	private int estado;
-
-	// TODO: IMPLEMENTAR DATOS DE CARGA
 
 }

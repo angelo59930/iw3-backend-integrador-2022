@@ -1,25 +1,25 @@
-package iua.kaf.Backend.model.business;
+package iua.kaf.Backend.model.business.exception;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class BusinessException extends Exception {
+public class NotFoundException extends Exception {
 
 	private static final long serialVersionUID = -8582277206660722157L;
 
 	@Builder
-	public BusinessException(String message, Throwable ex) {
+	public NotFoundException(String message, Throwable ex) {
 		super(message, ex);
 	}
+
 	@Builder
-	public BusinessException(String message) {
+	public NotFoundException(String message) {
 		super(message);
 	}
+
 	@Builder
-	public BusinessException(Throwable ex) {
+	public NotFoundException(Throwable ex) {
 		super(ex.getMessage(), ex);
 	}
-
-
 }

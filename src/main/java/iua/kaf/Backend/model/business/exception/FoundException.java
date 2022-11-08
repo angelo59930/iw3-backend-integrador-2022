@@ -1,4 +1,4 @@
-package iua.kaf.Backend.model.business;
+package iua.kaf.Backend.model.business.exception;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
