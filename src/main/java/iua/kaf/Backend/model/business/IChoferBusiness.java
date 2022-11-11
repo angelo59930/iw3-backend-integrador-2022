@@ -10,6 +10,8 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 public interface IChoferBusiness {
 
   public Chofer load(long id) throws NotFoundException, BusinessException;
+
+  public Chofer loadDNI(long id) throws NotFoundException, BusinessException;
   public List<Chofer> list() throws BusinessException;
   public Chofer add(Chofer chofer) throws FoundException, BusinessException;
 

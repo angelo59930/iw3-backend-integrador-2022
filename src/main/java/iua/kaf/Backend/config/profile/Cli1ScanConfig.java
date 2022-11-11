@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = {
     "iua.kaf.Backend.model",
     "iua.kaf.Backend.auth",
+        "iua.kaf.Backend.integration",
 })
 
 @Profile("cli1")

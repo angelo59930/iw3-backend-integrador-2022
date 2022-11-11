@@ -29,8 +29,11 @@ public class Camion {
 	
 	@Column(nullable = true)
 	private String descripcion;
-	
+
 	@Column(nullable = false)
 	private long cisternado;
+
+	@Column(nullable = true)
+	private double tara;
 
 }

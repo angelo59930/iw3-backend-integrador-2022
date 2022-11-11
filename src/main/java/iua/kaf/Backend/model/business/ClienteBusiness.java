@@ -36,6 +36,20 @@ public class ClienteBusiness implements IClienteBusiness {
     return r.get();
   }
 
+  public Cliente load(String nombre) throws NotFoundException, BusinessException {
+    Optional<Cliente> r;
+    try {
+      r = clienteDAO.findByNombre(nombre);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
+    }
+    if (r.isEmpty()) {
+      throw NotFoundException.builder().message("No se encuentra el cliente nombre=" + nombre).build();
+    }
+
+    return r.get();
+  }
   @Override
   public List<Cliente> list() throws BusinessException {
     try {

@@ -35,6 +35,21 @@ public class ProductoBusiness implements IProductoBusiness {
 
     return r.get();
   }
+  @Override
+  public Producto load(String nombre) throws NotFoundException, BusinessException {
+    Optional<Producto> r;
+    try {
+      r = productoDAO.findByNombre(nombre);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      throw BusinessException.builder().ex(e).build();
+    }
+    if (r.isEmpty()) {
+      throw NotFoundException.builder().message("No se encuentra el Producto nombre=" + nombre).build();
+    }
+
+    return r.get();
+  }
 
   @Override
   public List<Producto> list() throws BusinessException {
