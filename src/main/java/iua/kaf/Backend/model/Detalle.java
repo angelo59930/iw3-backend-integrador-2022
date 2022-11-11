@@ -45,7 +45,7 @@ public class Detalle {
   private int cantidadActualizaciones;
 
   @ManyToOne()
-	@JoinColumn(name = "id_orden", nullable = false)
+  @JoinColumn(name = "id_orden", nullable = false)
   private Orden orden;
 
 }
