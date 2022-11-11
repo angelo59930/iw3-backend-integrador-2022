@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import iua.kaf.Backend.model.business.ICamionBusiness;
 import iua.kaf.Backend.model.business.IChoferBusiness;
 import iua.kaf.Backend.model.business.IClienteBusiness;
-import iua.kaf.Backend.model.business.IOrdenBusiness;
 import iua.kaf.Backend.model.business.IProductoBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
@@ -51,6 +50,9 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
                 System.currentTimeMillis() + "");
 
         long numeroOrden = JsonUtiles.getLong(node , "orden_numeroOrden , numeroOrden_orden, numeroOrden".split(","),0);
+
+        r.setNumeroOrden(numeroOrden);
+
         String patente = JsonUtiles.getString(node, "orden_patente, patente_orden, patente".split(","),null);
         if (patente != null){
             try {
@@ -98,40 +100,12 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
 
 
         double preset = JsonUtiles.getDouble(node, "preset_orden , orden_preset , preset".split(",") , 0);
-        if (preset > 0){
-            r.setPreset(preset);
-        }else{
-            try {
-                throw new BusinessException().builder().message("El preset debe ser mayor a 0").build();
-            } catch (BusinessException e) {
+        r.setPreset(preset);
 
-            }
-        }
-
+        
         r.setCodeCli1(codigoExterno);
 
         return r;
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
