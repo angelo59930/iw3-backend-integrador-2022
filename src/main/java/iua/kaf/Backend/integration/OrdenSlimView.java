@@ -21,7 +21,6 @@ public class OrdenSlimView extends StdSerializer<Orden>{
 
 		gen.writeStartObject();
 		gen.writeNumberField("numero", value.getNumeroOrden());
-		gen.writeNumberField("Tara", value.getTara());
 		gen.writeStringField("Patente Camion", value.getCamion().getPatente());
 		gen.writeNumberField("DNI Chofer", value.getChofer().getDni());
 		gen.writeStringField("Cliente", value.getCliente().getNombre());

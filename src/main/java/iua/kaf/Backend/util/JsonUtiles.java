@@ -1,6 +1,7 @@
 package iua.kaf.Backend.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -57,6 +58,19 @@ public final class JsonUtiles {
 		for (String attr : attrs) {
 			if (node.get(attr) != null && node.get(attr).isDouble()) {
 				r = node.get(attr).asDouble();
+				break;
+			}
+		}
+		if (r == null)
+			r = defaultValue;
+		return r;
+	}
+
+	public static long getLong(JsonNode node, String[] attrs, long defaultValue) {
+		Long r = null;
+		for (String attr : attrs) {
+			if (node.get(attr) != null && node.get(attr).isDouble()) {
+				r = node.get(attr).asLong();
 				break;
 			}
 		}

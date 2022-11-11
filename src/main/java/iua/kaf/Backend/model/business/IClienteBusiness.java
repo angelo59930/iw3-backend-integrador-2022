@@ -11,6 +11,7 @@ public interface IClienteBusiness {
 
     public Cliente load(long id) throws NotFoundException, BusinessException;
 
+    public Cliente load(String nombre) throws NotFoundException, BusinessException;
     public List<Cliente> list() throws BusinessException;
 
     public Cliente add(Cliente cliente) throws FoundException, BusinessException;

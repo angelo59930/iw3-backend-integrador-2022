@@ -11,6 +11,7 @@ public interface ICamionBusiness {
 
     public Camion load(long id) throws NotFoundException, BusinessException;
 
+    public Camion load(String patente) throws NotFoundException, BusinessException;
     public List<Camion> list() throws BusinessException;
 
     public Camion add(Camion camion) throws FoundException, BusinessException;
