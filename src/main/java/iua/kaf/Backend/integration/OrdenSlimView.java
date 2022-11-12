@@ -1,30 +1,40 @@
 package iua.kaf.Backend.integration;
 
-import java.io.IOException;
+import iua.kaf.Backend.model.Camion;
+import iua.kaf.Backend.model.Chofer;
+import iua.kaf.Backend.model.Cliente;
+import iua.kaf.Backend.model.Producto;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+public interface OrdenSlimView {
 
-import iua.kaf.Backend.model.Orden;
+	String getPassword();
 
-public class OrdenSlimView extends StdSerializer<Orden>{
+	String getFechaInicioCarga();
 
-	private static final long serialVersionUID = -6736573222054945232L;
+	double preset();
 
-	protected OrdenSlimView(Class<?> t, boolean dummy) {
-		super(t, dummy);
+	Camion getCamion();
+
+	Chofer getChofer();
+
+	Cliente getCliente();
+
+	Producto getProducto();
+
+	interface getProducto {
+		String getNombre();		
 	}
 
-	@Override
-	public void serialize(Orden value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-
-		gen.writeStartObject();
-		gen.writeNumberField("numero", value.getNumeroOrden());
-		gen.writeStringField("Patente Camion", value.getCamion().getPatente());
-		gen.writeNumberField("DNI Chofer", value.getChofer().getDni());
-		gen.writeStringField("Cliente", value.getCliente().getNombre());
-		gen.writeStringField("Producto", value.getProducto().getNombre());
-		gen.writeEndObject();
+	interface getCliente {
+		String nombre();
 	}
+
+	interface getChofer {
+		long getDni();
+	}
+
+	interface getCamion {
+		String getPatente();
+	}
+
 }
