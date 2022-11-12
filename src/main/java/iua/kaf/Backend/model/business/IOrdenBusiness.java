@@ -19,5 +19,5 @@ public interface IOrdenBusiness {
 
     public void delete(long id) throws NotFoundException, BusinessException;
 
-    public List<OrdenSlimView> listSlim() throws BusinessException;
+    public List<OrdenSlimView> listSlim(long numOrden) throws BusinessException;
 }

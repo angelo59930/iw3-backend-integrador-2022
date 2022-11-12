@@ -110,9 +110,9 @@ public class OrdenBusiness implements IOrdenBusiness {
     }
 
     @Override
-	public List<OrdenSlimView> listSlim() throws BusinessException {
+	public List<OrdenSlimView> listSlim(long numOrden) throws BusinessException {
 		try {
-			return ordenDAO.findByOrdenByIdDesc();
+			return ordenDAO.findAllByNumeroOrden(numOrden);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw BusinessException.builder().ex(e).build();

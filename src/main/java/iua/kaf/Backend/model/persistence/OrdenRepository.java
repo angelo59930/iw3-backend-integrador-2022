@@ -11,7 +11,6 @@ import iua.kaf.Backend.model.Orden;
 @Repository
 public interface OrdenRepository extends JpaRepository<Orden, Long> {
 
-  //FIXME:cambiar el nombre de este metodo
-  public List<OrdenSlimView> findByOrdenByIdDesc();
+  public List<OrdenSlimView> findAllByNumeroOrden(long numOrden);
 
 }
