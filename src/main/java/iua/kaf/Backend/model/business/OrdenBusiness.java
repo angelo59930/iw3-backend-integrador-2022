@@ -3,15 +3,16 @@ package iua.kaf.Backend.model.business;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import iua.kaf.Backend.integration.OrdenSlimView;
 import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
@@ -108,4 +109,11 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     }
 
+    
+    //TODO completar la implementacion de loadSlimView, por alguna razon no te deja devolver un OrdenSlimView, sino que te obliga a que sea una Orden si o si
+    @Override
+    public Optional<OrdenSlimView> loadSlimView(long id) {
+    	return ordenDAO.findById(id);
+    }
+    
 }
