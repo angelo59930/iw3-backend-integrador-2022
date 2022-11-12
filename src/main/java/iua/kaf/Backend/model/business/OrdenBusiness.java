@@ -109,11 +109,14 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     }
 
-    
-    //TODO completar la implementacion de loadSlimView, por alguna razon no te deja devolver un OrdenSlimView, sino que te obliga a que sea una Orden si o si
     @Override
-    public Optional<OrdenSlimView> loadSlimView(long id) {
-    	return ordenDAO.findById(id);
+	public List<OrdenSlimView> listSlim() throws BusinessException {
+		try {
+			return ordenDAO.findByOrdenByIdDesc();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw BusinessException.builder().ex(e).build();
+		}
     }
     
 }

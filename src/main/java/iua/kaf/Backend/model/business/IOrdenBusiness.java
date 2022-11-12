@@ -1,7 +1,6 @@
 package iua.kaf.Backend.model.business;
 
 import java.util.List;
-import java.util.Optional;
 
 import iua.kaf.Backend.integration.OrdenSlimView;
 import iua.kaf.Backend.model.Orden;
@@ -20,5 +19,5 @@ public interface IOrdenBusiness {
 
     public void delete(long id) throws NotFoundException, BusinessException;
 
-	public Optional<OrdenSlimView> loadSlimView(long id);
+    public List<OrdenSlimView> listSlim() throws BusinessException;
 }
