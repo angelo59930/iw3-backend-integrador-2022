@@ -32,7 +32,36 @@ public class OrdenRestController {
 	@Autowired
 	private IOrdenBusiness ordenBusiness;
 
+	@PutMapping(value = "/pesaje-inicial/{id}")
+	public ResponseEntity<?> detalleInicial(@PathVariable("id") long id,@RequestParam(name = "tara",required = true) double tara) {
+		try {
+			ordenBusiness.pesajeInicial(id,tara);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
+					HttpStatus.NOT_FOUND);
 
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping(value = "/cerrar-orden/{id}")
+	public ResponseEntity<?> closeDetalle(@PathVariable("id") long id) {
+		try {
+			ordenBusiness.closeOrden(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
+					HttpStatus.NOT_FOUND);
+
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@PostMapping(value = "")
 	public ResponseEntity<?> add(@RequestBody Orden orden) {
@@ -92,16 +121,17 @@ public class OrdenRestController {
 
 	}
 
-
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> load(@PathVariable("id") long id,
 			@RequestParam(name = "slim", required = true, defaultValue = "v0") String slimView,
 			@RequestParam(name = "numOrden", required = false, defaultValue = "0") Long numOrden) {
 
 		try {
-			if (slimView.equals("v1")){
-				if(numOrden == 0)
-					return new ResponseEntity<>(responseBusiness.build(HttpStatus.BAD_REQUEST, null, "no se paso el numero de orden"), HttpStatus.BAD_REQUEST);
+			if (slimView.equals("v1")) {
+				if (numOrden == 0)
+					return new ResponseEntity<>(
+							responseBusiness.build(HttpStatus.BAD_REQUEST, null, "no se paso el numero de orden"),
+							HttpStatus.BAD_REQUEST);
 
 				return new ResponseEntity<>(ordenBusiness.listSlim(numOrden), HttpStatus.OK);
 			}
@@ -119,7 +149,6 @@ public class OrdenRestController {
 
 	}
 
-
 	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> list() {
 
@@ -130,7 +159,5 @@ public class OrdenRestController {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-
 
 }

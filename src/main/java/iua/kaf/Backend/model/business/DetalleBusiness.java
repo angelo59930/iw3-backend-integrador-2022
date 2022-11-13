@@ -96,27 +96,4 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 	}
 
-	@Override
-	public Detalle updateEstado(Detalle detalle, int estado) throws NotFoundException, BusinessException{
-
-		detalle.getOrden().setEstado(3);
-
-		try {
-			return detalleDAO.save(detalle);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw BusinessException.builder().ex(e).build();
-		}
-	}
-
-
-	@Override
-	public Detalle closDetalle(long id) throws NotFoundException, BusinessException {
-
-		Detalle d = load(id);
-		this.updateEstado(d, 3);
-		
-		return d;
-	}
-
 }

@@ -59,7 +59,7 @@ public class Orden {
 	private int estado;
 
 	//Solo 5 digitos como maximo
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private long password;
 
 	@ManyToOne

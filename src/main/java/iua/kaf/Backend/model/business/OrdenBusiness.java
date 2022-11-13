@@ -64,13 +64,6 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
 
         try {
-            //orden.getDetalle().setEstado(1);
-            String randomPassword = "";
-            for (int j = 0; j < 5; j++) {
-                randomPassword += randomCharacter();
-            }
-            orden.setPassword(Long.parseLong(randomPassword));
-
             return ordenDAO.save(orden);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -80,20 +73,20 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        //int estado = orden.getDetalle().getEstado();
-        //if (estado > 0 && estado < 3) {
+        // int estado = orden.getDetalle().getEstado();
+        // if (estado > 0 && estado < 3) {
 
-            load(orden.getId());
-            try {
-          //      orden.getDetalle().setEstado(2);
-                return ordenDAO.save(orden);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                throw BusinessException.builder().ex(e).build();
-            }
-        //}
+        load(orden.getId());
+        try {
+            // orden.getDetalle().setEstado(2);
+            return ordenDAO.save(orden);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+        // }
 
-        //throw BusinessException.builder().build();
+        // throw BusinessException.builder().build();
 
     }
 
@@ -110,13 +103,52 @@ public class OrdenBusiness implements IOrdenBusiness {
     }
 
     @Override
-	public Optional<OrdenSlimView> listSlim(long numOrden) throws BusinessException {
-		try {
-			return ordenDAO.findByNumeroOrden(numOrden);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw BusinessException.builder().ex(e).build();
-		}
+    public Optional<OrdenSlimView> listSlim(long numOrden) throws BusinessException {
+        try {
+            return ordenDAO.findByNumeroOrden(numOrden);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
     }
-    
+
+    @Override
+    public Orden closeOrden(long id) throws NotFoundException, BusinessException {
+
+        try {
+            Orden d = load(id);
+            d.setEstado(3);
+            return ordenDAO.save(d);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage(), e);
+            throw NotFoundException.builder().ex(e).build();
+        } catch (BusinessException e) {
+            throw NotFoundException.builder().ex(e).build();
+        }
+    }
+
+    @Override
+    public Orden pesajeInicial(long id, double tara) throws NotFoundException, BusinessException {
+        
+        try {
+            Orden orden = load(id);
+            orden.setTara(tara);
+
+            orden.setEstado(1);
+            String randomPassword = "";
+            for (int j = 0; j < 5; j++) {
+                randomPassword += randomCharacter();
+            }
+            orden.setPassword(Long.parseLong(randomPassword));
+            
+            return ordenDAO.save(orden);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage(), e);
+            throw NotFoundException.builder().ex(e).build();
+        } catch (BusinessException e) {
+            throw NotFoundException.builder().ex(e).build();
+        }
+        
+    }
+
 }

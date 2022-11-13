@@ -21,4 +21,8 @@ public interface IOrdenBusiness {
     public void delete(long id) throws NotFoundException, BusinessException;
 
     public Optional<OrdenSlimView> listSlim(long numOrden) throws BusinessException;
+
+    public Orden closeOrden(long id) throws NotFoundException, BusinessException;
+
+    public Orden pesajeInicial(long id, double tara) throws NotFoundException, BusinessException;
 }
