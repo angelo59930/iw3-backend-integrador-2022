@@ -34,7 +34,6 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 
 		try {
-			detalle.setEstado(2);
 			return detalleDAO.save(detalle);
 
 		} catch (Exception e) {
@@ -74,7 +73,7 @@ public class DetalleBusiness implements IDetalleBusiness {
 	public Detalle update(Detalle detalle, long id) throws NotFoundException, BusinessException, NotAcceptableException {
 		Detalle d = load(id);
 
-		if(d.getEstado() >= 3){
+		if(d.getOrden().getEstado() >= 3){
 			throw NotAcceptableException.builder().message("El detalle se encuentra en estado 3 o 4").build();
 		}	
 		
@@ -87,7 +86,7 @@ public class DetalleBusiness implements IDetalleBusiness {
 			throw NotAcceptableException.builder().message("La ultima masa acumulada es menor a la masa acumulada anterior").build();
 		}
 		
-		detalle.setEstado(2);
+		detalle.getOrden().setEstado(2);
 
 		try {
 			return detalleDAO.save(detalle);
@@ -100,7 +99,7 @@ public class DetalleBusiness implements IDetalleBusiness {
 	@Override
 	public Detalle updateEstado(Detalle detalle, int estado) throws NotFoundException, BusinessException{
 
-		detalle.setEstado(3);
+		detalle.getOrden().setEstado(3);
 
 		try {
 			return detalleDAO.save(detalle);

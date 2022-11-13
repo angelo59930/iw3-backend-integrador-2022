@@ -37,9 +37,6 @@ public class Detalle {
   
   @Column(nullable = true)
   private double caudal;
-  
-  @Column(nullable = true)
-  private int estado;
 
   @Column(nullable = true)
   private int cantidadActualizaciones;

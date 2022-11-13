@@ -51,7 +51,13 @@ public class Orden {
 
 	@Column(nullable = false)
 	private double preset;
+
+	@Column(nullable = true)
+	private double tara;
 	
+	@Column(nullable = true)
+	private int estado;
+
 	//Solo 5 digitos como maximo
 	@Column(nullable = false)
 	private long password;

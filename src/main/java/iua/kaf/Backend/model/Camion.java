@@ -33,7 +33,4 @@ public class Camion {
 	@Column(nullable = false)
 	private long cisternado;
 
-	@Column(nullable = true)
-	private double tara;
-
 }

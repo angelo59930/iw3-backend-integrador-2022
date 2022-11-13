@@ -20,7 +20,6 @@ public class CamionJsonSerializer extends StdSerializer<Camion>{
 		gen.writeStringField("patente", value.getPatente());
 		gen.writeNumberField("cisternado", value.getCisternado());
 		gen.writeStringField("descripcion", value.getDescripcion());
-		gen.writeNumberField("Tara", value.getTara());
 		gen.writeEndObject();
 		
 	}
