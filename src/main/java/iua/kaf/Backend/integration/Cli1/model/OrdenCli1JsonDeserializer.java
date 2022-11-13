@@ -12,14 +12,13 @@ import iua.kaf.Backend.model.business.IProductoBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.JsonUtiles;
-import lombok.extern.slf4j.Slf4j;
+
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Slf4j
 public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
 
     private static final long serialVersionUID = -2316126911378870652L;
