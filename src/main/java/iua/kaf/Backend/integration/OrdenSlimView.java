@@ -11,30 +11,27 @@ public interface OrdenSlimView {
 
 	String getFechaInicioCarga();
 
-	double preset();
+	double getPreset();
 
 	Camion getCamion();
 
 	Chofer getChofer();
-
-	Cliente getCliente();
-
-	Producto getProducto();
-
-	interface getProducto {
-		String getNombre();		
-	}
-
-	interface getCliente {
-		String nombre();
-	}
-
 	interface getChofer {
 		long getDni();
 	}
 
+	Cliente getCliente();
 	interface getCamion {
 		String getPatente();
 	}
+	interface getCliente {
+		String getNombre();
+	}
+
+	Producto getProducto();
+	interface getProducto {
+		String getNombre();
+	}
 
 }
+

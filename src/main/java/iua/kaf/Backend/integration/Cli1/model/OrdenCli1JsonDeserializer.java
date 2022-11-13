@@ -12,17 +12,19 @@ import iua.kaf.Backend.model.business.IProductoBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.JsonUtiles;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Slf4j
 public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
 
     private static final long serialVersionUID = -2316126911378870652L;
 
-    protected OrdenCli1JsonDeserializer(Class<?> vc){
+    protected OrdenCli1JsonDeserializer(Class<?> vc) {
         super(vc);
     }
 
@@ -31,8 +33,8 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
     private IClienteBusiness clienteBusiness;
     private IProductoBusiness productoBusiness;
 
-    public OrdenCli1JsonDeserializer(Class<?>vc  , ICamionBusiness camionBusiness, IChoferBusiness choferBusiness ,
-                                     IClienteBusiness clienteBusiness, IProductoBusiness productoBusiness ){
+    public OrdenCli1JsonDeserializer(Class<?> vc, ICamionBusiness camionBusiness, IChoferBusiness choferBusiness,
+            IClienteBusiness clienteBusiness, IProductoBusiness productoBusiness) {
         super(vc);
 
         this.camionBusiness = camionBusiness;
@@ -41,56 +43,65 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
         this.productoBusiness = productoBusiness;
     }
 
-    public OrdenCli1 deserialize(JsonParser jp , DeserializationContext ctxt) throws IOException, JacksonException{
+    public OrdenCli1 deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JacksonException {
         OrdenCli1 r = new OrdenCli1();
         JsonNode node = jp.getCodec().readTree(jp);
 
-        //Este es nuestro codigo externo que vamos pasar entre distintas entidades
-        String codigoExterno = JsonUtiles.getString(node , "orden_codigoExterno, codigoExterno_orden, codigoExterno".split(","),
+        // Este es nuestro codigo externo que vamos pasar entre distintas entidades
+        String codigoExterno = JsonUtiles.getString(node,
+                "orden_codigoExterno,codigoExterno_orden,codigoExterno".split(","),
                 System.currentTimeMillis() + "");
 
-        long numeroOrden = JsonUtiles.getLong(node , "orden_numeroOrden , numeroOrden_orden, numeroOrden".split(","),0);
+        String numeroOrden = JsonUtiles.getString(node, "orden_numeroOrden,numeroOrden_orden,numeroOrden".split(","), null);
 
-        r.setNumeroOrden(numeroOrden);
+        Long parseNumOrden = Long.parseLong(numeroOrden);
 
-        String patente = JsonUtiles.getString(node, "orden_patente, patente_orden, patente".split(","),null);
-        if (patente != null){
+        r.setNumeroOrden(parseNumOrden);
+
+        String patente = JsonUtiles.getString(node, "orden_patente,patente_orden,patente".split(","), null);
+        if (patente != null) {
             try {
                 r.setCamion(camionBusiness.load(patente));
-            }catch (NotFoundException | BusinessException e){
+            } catch (NotFoundException | BusinessException e) {
 
             }
         }
 
-        String producto = JsonUtiles.getString(node, "orden_producto, producto_orden, producto".split(","),null);
-        if (producto != null){
+        String producto = JsonUtiles.getString(node, "orden_producto,producto_orden,producto".split(","), null);
+        if (producto != null) {
             try {
                 r.setProducto(productoBusiness.load(producto));
-            }catch (NotFoundException | BusinessException e){
+            } catch (NotFoundException | BusinessException e) {
 
             }
         }
 
-        long dniChofer = JsonUtiles.getLong(node, "orden_dniChofer, dniChofer_orden, dniChofer".split(","),0);
-        if (dniChofer != 0){
+        String dniChofer = JsonUtiles.getString(node, "orden_dniChofer,dniChofer_orden,dniChofer".split(","), null);
+
+        long dni = Long.parseLong(dniChofer);
+
+        if (dni != 0) {
             try {
-                r.setChofer(choferBusiness.load(dniChofer));
-            }catch (NotFoundException | BusinessException e){
+                r.setChofer(choferBusiness.load(dni));
+            } catch (NotFoundException | BusinessException e) {
 
             }
         }
 
-        String nombreCliente = JsonUtiles.getString(node, "orden_nombreCliente, nombreCliente_orden, nombreCliente".split(","),null);
-        if (nombreCliente != null){
+        String nombreCliente = JsonUtiles.getString(node,
+                "orden_nombreCliente,nombreCliente_orden,nombreCliente,cliente".split(","), null);
+        if (nombreCliente != null) {
             try {
                 r.setCliente(clienteBusiness.load(nombreCliente));
-            }catch (NotFoundException | BusinessException e){
+            } catch (NotFoundException | BusinessException e) {
 
             }
         }
 
-        String fechaCargaPrevista = JsonUtiles.getString(node, "orden_fechaCargaPrevista, fechaCargaPrevista_orden, fechaCargaPrevista".split(","),null);
-        Date date1= null;
+        String fechaCargaPrevista = JsonUtiles.getString(node,
+                "orden_fechaCargaPrevista,fechaCargaPrevista_orden,fechaCargaPrevista".split(","), null);
+        Date date1 = null;
+
         try {
             date1 = new SimpleDateFormat("dd-MM-yyyy").parse(fechaCargaPrevista);
         } catch (ParseException e) {
@@ -98,11 +109,12 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
         }
         r.setFechaInicioCarga(date1);
 
+        String preset = JsonUtiles.getString(node, "preset_orden,orden_preset,preset".split(","), null);
 
-        double preset = JsonUtiles.getDouble(node, "preset_orden , orden_preset , preset".split(",") , 0);
-        r.setPreset(preset);
+        double parsePreset = Double.parseDouble(preset);
 
-        
+        r.setPreset(parsePreset);
+
         r.setCodeCli1(codigoExterno);
 
         return r;

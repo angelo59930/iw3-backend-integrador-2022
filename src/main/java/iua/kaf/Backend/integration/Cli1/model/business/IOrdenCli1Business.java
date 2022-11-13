@@ -6,7 +6,6 @@ import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IOrdenCli1Business {
 
@@ -15,4 +14,7 @@ public interface IOrdenCli1Business {
     public List<OrdenCli1> list() throws BusinessException;
 
     public OrdenCli1 add(OrdenCli1 ordenCli1) throws FoundException, BusinessException;
+
+    public OrdenCli1 addExternal(String json) throws FoundException, BusinessException;
+
 }
