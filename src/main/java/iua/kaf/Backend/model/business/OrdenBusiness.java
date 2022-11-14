@@ -119,8 +119,6 @@ public class OrdenBusiness implements IOrdenBusiness {
         try {
             Orden d = load(id);
             d.setEstado(3);
-            d.setFechaPesajeFinal(new Date());
-
             return ordenDAO.save(d);
         } catch (NotFoundException e) {
             log.error(e.getMessage(), e);
