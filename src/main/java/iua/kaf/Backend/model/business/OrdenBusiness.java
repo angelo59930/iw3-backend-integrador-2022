@@ -1,17 +1,22 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import iua.kaf.Backend.integration.OrdenSlimView;
+import iua.kaf.Backend.model.Conciliacion;
 import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
+import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
+import iua.kaf.Backend.model.persistence.DetalleRepository;
 import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
@@ -19,6 +24,9 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Autowired
     private OrdenRepository ordenDAO;
+    
+    @Autowired
+    private DetalleRepository detalleDAO; 
 
     @Override
     public Orden load(long id) throws NotFoundException, BusinessException {
@@ -63,13 +71,6 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
 
         try {
-            //orden.getDetalle().setEstado(1);
-            String randomPassword = "";
-            for (int j = 0; j < 5; j++) {
-                randomPassword += randomCharacter();
-            }
-            orden.setPassword(Long.parseLong(randomPassword));
-
             return ordenDAO.save(orden);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -79,20 +80,20 @@ public class OrdenBusiness implements IOrdenBusiness {
 
     @Override
     public Orden update(Orden orden) throws NotFoundException, BusinessException {
-        //int estado = orden.getDetalle().getEstado();
-        //if (estado > 0 && estado < 3) {
+        // int estado = orden.getDetalle().getEstado();
+        // if (estado > 0 && estado < 3) {
 
-            load(orden.getId());
-            try {
-          //      orden.getDetalle().setEstado(2);
-                return ordenDAO.save(orden);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                throw BusinessException.builder().ex(e).build();
-            }
-        //}
+        load(orden.getId());
+        try {
+            // orden.getDetalle().setEstado(2);
+            return ordenDAO.save(orden);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+        // }
 
-        //throw BusinessException.builder().build();
+        // throw BusinessException.builder().build();
 
     }
 
@@ -107,5 +108,102 @@ public class OrdenBusiness implements IOrdenBusiness {
         }
 
     }
+
+    @Override
+    public Optional<OrdenSlimView> listSlim(long numOrden) throws BusinessException {
+        try {
+            return ordenDAO.findByNumeroOrden(numOrden);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+    }
+
+    @Override
+    public Orden closeOrden(long id) throws NotFoundException, BusinessException {
+
+        try {
+            Orden d = load(id);
+            d.setEstado(3);
+            return ordenDAO.save(d);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage(), e);
+            throw NotFoundException.builder().ex(e).build();
+        } catch (BusinessException e) {
+            throw NotFoundException.builder().ex(e).build();
+        }
+    }
+
+    @Override
+    public Orden pesajeInicial(long id, double tara) throws NotFoundException, BusinessException {
+        
+        try {
+            Orden orden = load(id);
+            orden.setTara(tara);
+
+            orden.setEstado(2);
+            String randomPassword = "";
+            for (int j = 0; j < 5; j++) {
+                randomPassword += randomCharacter();
+            }
+            orden.setPassword(Long.parseLong(randomPassword));
+
+            orden.setFechaRecepcionPesaje(new Date());
+            
+            return ordenDAO.save(orden);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage(), e);
+            throw NotFoundException.builder().ex(e).build();
+        } catch (BusinessException e) {
+            throw NotFoundException.builder().ex(e).build();
+        }
+        
+    }
+    
+    @Override
+    public Conciliacion pesajeFinal(long id, double ultimoPeso) throws NotFoundException, BusinessException, NotAcceptableException {
+    	Orden o = load(id);
+    	
+    	if(o.getEstado() == 3) {
+
+        	o.setFechaPesajeFinal(new Date());
+        	
+        	o.setEstado(4);
+        	
+        	this.update(o);
+        	
+    		return this.conciliacion(id);
+        		
+    	}
+    	
+    	throw NotAcceptableException.builder().message("La orden no esta en estado 3").build();
+    	
+    }
+    
+    @Override
+    public Conciliacion conciliacion(long id) throws NotFoundException, BusinessException, NotAcceptableException {
+    	Conciliacion c = new Conciliacion();
+    	
+    	Orden o = load(id);
+    	
+    	if(o.getEstado() == 4) {
+    		c.setPesajeInicial(o.getTara());
+        	c.setPesajeFinal(o.getPesajeFinal());
+        	
+        	c.setProductoCargado(detalleDAO.ultimaMasaAcumulada(id));
+        	c.setNetoPorBalanza(c.getPesajeFinal() - c.getPesajeInicial());
+        	c.setDiferenciaEntreBalanzaCaudalimetro(c.getNetoPorBalanza() - c.getProductoCargado());
+        	
+        	c.setPromedioTemperatura(detalleDAO.promedioTemperatura(id));
+        	c.setPromedioCaudal(detalleDAO.promedioCaudal(id));
+        	c.setPromedioDensidad(detalleDAO.promedioDensidad(id));
+        	
+    		return c;
+	
+    	}
+    	
+    	throw NotAcceptableException.builder().message("La orden no esta en estado 4").build();
+    	
+     }
 
 }

@@ -1,17 +1,20 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
+import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.ForbiddenException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
+import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -20,6 +23,8 @@ public class DetalleBusiness implements IDetalleBusiness {
 
 	@Autowired
 	private DetalleRepository detalleDAO;
+
+	@Autowired OrdenBusiness ordenDAO;
 
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
@@ -34,6 +39,10 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 
 		try {
+
+			Orden o = ordenDAO.load(detalle.getOrden().getId());
+			o.setFechaInicioCarga(new Date());
+			ordenDAO.update(o);
 
 			return detalleDAO.save(detalle);
 
@@ -71,10 +80,10 @@ public class DetalleBusiness implements IDetalleBusiness {
 	}
 
 	@Override
-	public Detalle update(Detalle detalle) throws NotFoundException, BusinessException, NotAcceptableException {
-		Detalle d = load(detalle.getId());
+	public Detalle update(Detalle detalle, long id) throws NotFoundException, BusinessException, NotAcceptableException {
+		Detalle d = load(id);
 
-		if(d.getEstado() >= 3){
+		if(d.getOrden().getEstado() >= 3){
 			throw NotAcceptableException.builder().message("El detalle se encuentra en estado 3 o 4").build();
 		}	
 		
@@ -86,36 +95,18 @@ public class DetalleBusiness implements IDetalleBusiness {
 		if(d.getUltMasaAcumulada() > detalle.getUltMasaAcumulada()) {
 			throw NotAcceptableException.builder().message("La ultima masa acumulada es menor a la masa acumulada anterior").build();
 		}
-		
+
 		try {
+
+			Orden o = ordenDAO.load(detalle.getOrden().getId());
+			o.setFechaFinCarga(new Date());
+			ordenDAO.update(o);
+
 			return detalleDAO.save(detalle);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw BusinessException.builder().ex(e).build();
 		}
-	}
-
-	@Override
-	public Detalle update(Detalle detalle, int estado) throws NotFoundException, BusinessException{
-
-		detalle.setEstado(3);
-
-		try {
-			return detalleDAO.save(detalle);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			throw BusinessException.builder().ex(e).build();
-		}
-	}
-
-
-	@Override
-	public Detalle closDetalle(long id) throws NotFoundException, BusinessException {
-
-		Detalle d = load(id);
-		this.update(d, 3);
-		
-		return d;
 	}
 
 }

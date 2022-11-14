@@ -35,6 +35,21 @@ public class ChoferBusiness implements IChoferBusiness {
     }
 
     @Override
+    public Chofer loadDNI(long dni) throws NotFoundException, BusinessException {
+        Optional<Chofer> r;
+        try {
+            r = choferDAO.findByDni(dni);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+        if (r.isEmpty()) {
+            throw NotFoundException.builder().message("No se encuentra el chofer con dni=" + dni).build();
+        }
+        return r.get();
+    }
+
+    @Override
     public List<Chofer> list() throws BusinessException {
         try {
             return choferDAO.findAll();

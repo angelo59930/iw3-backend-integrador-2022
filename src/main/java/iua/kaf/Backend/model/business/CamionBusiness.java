@@ -38,6 +38,22 @@ public class CamionBusiness implements ICamionBusiness {
     }
 
     @Override
+    public Camion load(String patente) throws NotFoundException, BusinessException {
+        Optional<Camion> r;
+        try {
+            r = camionDAO.findByPatente(patente);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+        if (r.isEmpty()) {
+            throw NotFoundException.builder().message("No se encuentra el Camion patente=" + patente).build();
+        }
+
+        return r.get();
+    }
+
+    @Override
     public List<Camion> list() throws BusinessException {
         try {
             return camionDAO.findAll();

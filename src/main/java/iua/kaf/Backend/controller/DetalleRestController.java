@@ -31,21 +31,7 @@ public class DetalleRestController {
 	@Autowired
 	private IDetalleBusiness detalleBusiness;
 
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> closeDetalle(@PathVariable("id") long id) {
-		try {
-			detalleBusiness.closDetalle(id);
-			return new ResponseEntity<>(HttpStatus.OK);
-
-		} catch (NotFoundException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
-					HttpStatus.NOT_FOUND);
-
-		} catch (BusinessException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	
 
 	@GetMapping()
 	public ResponseEntity<?> list() {
@@ -95,10 +81,10 @@ public class DetalleRestController {
 
 	}
 
-	@PutMapping(value = "")
-	public ResponseEntity<?> update(@RequestBody Detalle detalle) {
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<?> update(@RequestBody Detalle detalle,@PathVariable("id") long id) {
 		try {
-			detalleBusiness.update(detalle);
+			detalleBusiness.update(detalle, id);
 			return new ResponseEntity<>(HttpStatus.OK);
 
 		} catch (NotFoundException e) {

@@ -20,12 +20,10 @@ public class DetalleJsonSerializer extends StdSerializer<Detalle> {
     public void serialize(Detalle value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 
         gen.writeStartObject();
-        gen.writeNumberField("UltMasaAcumulada" , value.getUltMasaAcumulada());
+        gen.writeNumberField("MasaAcumulada" , value.getUltMasaAcumulada());
         gen.writeNumberField("DesidadProducto" , value.getDesidadProducto());
         gen.writeNumberField("TemperaturaProducto" , value.getDesidadProducto());
         gen.writeNumberField("Caudal" , value.getCaudal());
-        gen.writeNumberField("Estado" , value.getEstado());
-        gen.writeNumberField("CantidadActualizaciones" , value.getCantidadActualizaciones());
         gen.writeEndObject();
     }
 
