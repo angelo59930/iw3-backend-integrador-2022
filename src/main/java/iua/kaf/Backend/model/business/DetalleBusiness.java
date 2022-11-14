@@ -40,8 +40,6 @@ public class DetalleBusiness implements IDetalleBusiness {
 
 		try {
 
-
-			detalle.getOrden().setFechaInicioCarga(new Date());
 			Orden o = ordenDAO.load(detalle.getOrden().getId());
 			o.setFechaInicioCarga(new Date());
 			ordenDAO.update(o);
@@ -99,6 +97,11 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 
 		try {
+
+			Orden o = ordenDAO.load(detalle.getOrden().getId());
+			o.setFechaFinCarga(new Date());
+			ordenDAO.update(o);
+
 			return detalleDAO.save(detalle);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
