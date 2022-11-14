@@ -159,14 +159,26 @@ public class OrdenBusiness implements IOrdenBusiness {
     
     @Override
     public Conciliacion pesajeFinal(long id, double ultimoPeso) throws NotFoundException, BusinessException {
-    	Conciliacion c = new Conciliacion();
-    	
     	Orden o = load(id);
     	
     	o.setFechaPesajeFinal(new Date());
     	
+    	o.setEstado(4);
+    	
+    	this.update(o);
+    	
+		return this.conciliacion(id);
+    	
+    }
+    
+    @Override
+    public Conciliacion conciliacion(long id) throws NotFoundException, BusinessException {
+    	Conciliacion c = new Conciliacion();
+    	
+    	Orden o = load(id);
+    	
     	c.setPesajeInicial(o.getTara());
-    	c.setPesajeFinal(ultimoPeso);
+    	c.setPesajeFinal(o.getPesajeFinal());
     	
     	c.setProductoCargado(detalleDAO.ultimaMasaAcumulada(id));
     	c.setNetoPorBalanza(c.getPesajeFinal() - c.getPesajeInicial());
@@ -176,12 +188,7 @@ public class OrdenBusiness implements IOrdenBusiness {
     	c.setPromedioCaudal(detalleDAO.promedioCaudal(id));
     	c.setPromedioDensidad(detalleDAO.promedioDensidad(id));
     	
-    	o.setEstado(4);
-    	
-    	this.update(o);
-    	
 		return c;
-    	
     }
 
 }

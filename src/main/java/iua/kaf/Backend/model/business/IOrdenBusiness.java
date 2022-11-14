@@ -28,4 +28,6 @@ public interface IOrdenBusiness {
     public Orden pesajeInicial(long id, double tara) throws NotFoundException, BusinessException;
 
 	public Conciliacion pesajeFinal(long id, double ultimoPeso) throws NotFoundException, BusinessException;
+
+	public Conciliacion conciliacion(long id) throws NotFoundException, BusinessException;
 }

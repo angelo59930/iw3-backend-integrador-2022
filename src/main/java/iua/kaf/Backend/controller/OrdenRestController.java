@@ -51,6 +51,24 @@ public class OrdenRestController {
 		}
 	}
 	
+	@GetMapping(value = "/conciliacion/{id}")
+	public ResponseEntity<?> obtenerConciliacion(@PathVariable("id") long id){
+		
+		Conciliacion response = new Conciliacion();
+		try {
+			response = ordenBusiness.conciliacion(id);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+			
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
+					HttpStatus.NOT_FOUND);
+		
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PutMapping(value = "/pesaje-inicial/{id}")
 	public ResponseEntity<?> pesajeInicial(@PathVariable("id") long id,@RequestParam(name = "tara",required = true) double tara) {
 		try {
