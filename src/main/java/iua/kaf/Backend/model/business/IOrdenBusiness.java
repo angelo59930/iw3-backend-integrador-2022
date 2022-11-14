@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import iua.kaf.Backend.integration.OrdenSlimView;
+import iua.kaf.Backend.model.Conciliacion;
 import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
@@ -25,4 +26,6 @@ public interface IOrdenBusiness {
     public Orden closeOrden(long id) throws NotFoundException, BusinessException;
 
     public Orden pesajeInicial(long id, double tara) throws NotFoundException, BusinessException;
+
+	public Conciliacion pesajeFinal(long id, double ultimoPeso) throws NotFoundException, BusinessException;
 }

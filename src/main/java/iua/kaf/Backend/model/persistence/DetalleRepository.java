@@ -24,6 +24,6 @@ public interface DetalleRepository extends JpaRepository<Detalle, Long> {
   @Query(value = "SELECT AVG(caudal) FROM detalles WHERE detalles.id_orden = ?", nativeQuery = true)
   public double promedioCaudal(long id);
   
-  @Query(value = "SELECT AVG(densidad_producto) FROM detalles WHERE detalles.id_orden = ?", nativeQuery = true)
+  @Query(value = "SELECT AVG(desidad_producto) FROM detalles WHERE detalles.id_orden = ?", nativeQuery = true)
   public double promedioDensidad(long id);
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import iua.kaf.Backend.model.Conciliacion;
 import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.IOrdenBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
@@ -32,8 +33,26 @@ public class OrdenRestController {
 	@Autowired
 	private IOrdenBusiness ordenBusiness;
 
+	@PutMapping(value = "/pesaje-final/{id}")
+	public ResponseEntity<?> pesajeFinal(@PathVariable("id") long id,@RequestParam(name = "ultimoPeso",required = true) double ultimoPeso) {
+		try {
+			
+			Conciliacion response = ordenBusiness.pesajeFinal(id,ultimoPeso);
+			
+			return new ResponseEntity<>(response, HttpStatus.OK);
+			
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
+					HttpStatus.NOT_FOUND);
+
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@PutMapping(value = "/pesaje-inicial/{id}")
-	public ResponseEntity<?> detalleInicial(@PathVariable("id") long id,@RequestParam(name = "tara",required = true) double tara) {
+	public ResponseEntity<?> pesajeInicial(@PathVariable("id") long id,@RequestParam(name = "tara",required = true) double tara) {
 		try {
 			ordenBusiness.pesajeInicial(id,tara);
 			return new ResponseEntity<>(HttpStatus.OK);

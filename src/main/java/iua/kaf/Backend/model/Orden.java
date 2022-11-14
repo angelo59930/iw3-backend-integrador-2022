@@ -50,7 +50,7 @@ public class Orden {
 
 
 	// se genera con el primer detalle ( con el post )
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Date fechaInicioCarga;
 
 
