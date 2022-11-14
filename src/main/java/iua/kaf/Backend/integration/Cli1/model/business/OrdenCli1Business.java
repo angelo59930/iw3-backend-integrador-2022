@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +89,7 @@ public class OrdenCli1Business implements IOrdenCli1Business {
 
         try {
             orden = mapper.readValue(json, OrdenCli1.class);
+            orden.setFechaRecepcionExt(new Date());
         }catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
             throw BusinessException.builder().ex(e).build();

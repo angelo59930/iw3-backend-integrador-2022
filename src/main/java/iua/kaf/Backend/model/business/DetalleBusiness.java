@@ -1,17 +1,20 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
+import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.ForbiddenException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
+import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -20,6 +23,8 @@ public class DetalleBusiness implements IDetalleBusiness {
 
 	@Autowired
 	private DetalleRepository detalleDAO;
+
+	@Autowired OrdenBusiness ordenDAO;
 
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
@@ -34,6 +39,13 @@ public class DetalleBusiness implements IDetalleBusiness {
 		}
 
 		try {
+
+
+			detalle.getOrden().setFechaInicioCarga(new Date());
+			Orden o = ordenDAO.load(detalle.getOrden().getId());
+			o.setFechaInicioCarga(new Date());
+			ordenDAO.update(o);
+
 			return detalleDAO.save(detalle);
 
 		} catch (Exception e) {

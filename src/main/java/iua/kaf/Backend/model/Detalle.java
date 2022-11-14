@@ -38,8 +38,6 @@ public class Detalle {
   @Column(nullable = true)
   private double caudal;
 
-  @Column(nullable = true)
-  private int cantidadActualizaciones;
 
   @ManyToOne()
   @JoinColumn(name = "id_orden", nullable = false)

@@ -1,5 +1,6 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -140,6 +141,8 @@ public class OrdenBusiness implements IOrdenBusiness {
                 randomPassword += randomCharacter();
             }
             orden.setPassword(Long.parseLong(randomPassword));
+
+            orden.setFechaRecepcionPesaje(new Date());
             
             return ordenDAO.save(orden);
         } catch (NotFoundException e) {
