@@ -20,6 +20,7 @@ import iua.kaf.Backend.model.Orden;
 import iua.kaf.Backend.model.business.IOrdenBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
+import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.IStandardResponseBusiness;
 
@@ -48,6 +49,9 @@ public class OrdenRestController {
 		} catch (BusinessException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotAcceptableException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -56,6 +60,7 @@ public class OrdenRestController {
 		
 		Conciliacion response = new Conciliacion();
 		try {
+			
 			response = ordenBusiness.conciliacion(id);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 			
@@ -64,6 +69,9 @@ public class OrdenRestController {
 					HttpStatus.NOT_FOUND);
 		
 		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (NotAcceptableException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
