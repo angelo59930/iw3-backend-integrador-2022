@@ -164,7 +164,7 @@ public class OrdenBusiness implements IOrdenBusiness {
     public Conciliacion pesajeFinal(long id, double ultimoPeso) throws NotFoundException, BusinessException, NotAcceptableException {
     	Orden o = load(id);
     	
-    	if(o.getEstado() != 3) {
+    	if(o.getEstado() == 3) {
 
         	o.setFechaPesajeFinal(new Date());
         	

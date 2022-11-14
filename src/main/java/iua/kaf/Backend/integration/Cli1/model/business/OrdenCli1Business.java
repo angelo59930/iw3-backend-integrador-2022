@@ -90,6 +90,7 @@ public class OrdenCli1Business implements IOrdenCli1Business {
         try {
             orden = mapper.readValue(json, OrdenCli1.class);
             orden.setFechaRecepcionExt(new Date());
+            orden.setEstado(1);
         }catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
             throw BusinessException.builder().ex(e).build();
