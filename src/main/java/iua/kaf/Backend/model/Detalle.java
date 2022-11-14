@@ -38,7 +38,6 @@ public class Detalle {
   @Column(nullable = true)
   private double caudal;
 
-
   @ManyToOne()
   @JoinColumn(name = "id_orden", nullable = false)
   private Orden orden;

@@ -71,6 +71,9 @@ public class Orden {
 	private double tara;
 	
 	@Column(nullable = true)
+	private double pesajeFinal;
+	
+	@Column(nullable = true)
 	private int estado;
 
 	//Solo 5 digitos como maximo
