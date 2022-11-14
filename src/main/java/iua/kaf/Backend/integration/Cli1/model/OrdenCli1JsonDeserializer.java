@@ -106,7 +106,7 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        r.setFechaInicioCarga(date1);
+        r.setFechaCargaPrevista(date1);
 
         String preset = JsonUtiles.getString(node, "preset_orden,orden_preset,preset".split(","), null);
 

@@ -85,8 +85,6 @@ public class DetalleBusiness implements IDetalleBusiness {
 		if(d.getUltMasaAcumulada() > detalle.getUltMasaAcumulada()) {
 			throw NotAcceptableException.builder().message("La ultima masa acumulada es menor a la masa acumulada anterior").build();
 		}
-		
-		detalle.getOrden().setEstado(2);
 
 		try {
 			return detalleDAO.save(detalle);

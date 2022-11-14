@@ -34,18 +34,33 @@ public class Orden {
 	@Column(unique = true, nullable = false)
 	private long numeroOrden;
 
+	// Generar cuando le llama al endpoint del codigo externo
 	@Column(nullable = true)
 	private Date fechaRecepcionExt;
 
+
+	// se genera cuando se llama al endpoint de la tara
 	@Column(nullable = true)
 	private Date fechaRecepcionPesaje;
 
+
+	// se genera con el endpoint del sistema externo
+	@Column(nullable = true)
+	private Date fechaCargaPrevista;
+
+
+	// se genera con el primer detalle ( con el post )
 	@Column(nullable = false)
 	private Date fechaInicioCarga;
 
+
+	// se genera en el endpoint de actualizacion del detalle cuando
+	// el atributo de ultmasaacumulada = preset
 	@Column(nullable = true)
 	private Date fechaFinCarga;
 
+	
+	// se genera en el endpoint de cierre de orden
 	@Column(nullable = true)
 	private Date fechaPesajeFinal;
 

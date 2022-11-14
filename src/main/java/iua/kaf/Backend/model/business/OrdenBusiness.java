@@ -134,7 +134,7 @@ public class OrdenBusiness implements IOrdenBusiness {
             Orden orden = load(id);
             orden.setTara(tara);
 
-            orden.setEstado(1);
+            orden.setEstado(2);
             String randomPassword = "";
             for (int j = 0; j < 5; j++) {
                 randomPassword += randomCharacter();
