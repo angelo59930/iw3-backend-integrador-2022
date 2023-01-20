@@ -3,7 +3,6 @@ package iua.kaf.Backend.model.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
@@ -14,7 +13,6 @@ import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
-import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -26,8 +24,16 @@ public class DetalleBusiness implements IDetalleBusiness {
 
 	@Autowired OrdenBusiness ordenDAO;
 
+	@Autowired
+	MailBusiness mailBusiness;
+	
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
+		
+		if(detalle.getTempProducto() > 300) {
+			mailBusiness.sendSimpleMessage("fzamora994@alumnos.iua.edu.ar", "testin de mail", "test");
+		}
+		
 		try {
 			load(detalle.getId());
 			throw FoundException.builder().message("Se encuentró el detalle id=" + detalle.getId()).build();
