@@ -31,7 +31,7 @@ public class DetalleBusiness implements IDetalleBusiness {
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
 		
 		if(detalle.getTempProducto() > 300) {
-			mailBusiness.sendSimpleMessage("fzamora994@alumnos.iua.edu.ar", "testin de mail", "test");
+			mailBusiness.sendSimpleMessage("fzamora994@alumnos.iua.edu.ar", "Temperatura maxima excedida", "Temperatura: " + detalle.getTempProducto());
 		}
 		
 		try {
