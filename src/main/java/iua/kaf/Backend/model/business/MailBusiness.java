@@ -3,12 +3,20 @@ package iua.kaf.Backend.model.business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import iua.kaf.Backend.model.Mail;
+import iua.kaf.Backend.model.persistence.MailRepository;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Service
 @Slf4j
 public class MailBusiness {
+	
+	@Autowired
+	private MailRepository mailDAO2;
 	
 	@Autowired
 	private JavaMailSender emailSender;
@@ -26,5 +34,17 @@ public class MailBusiness {
 			log.error(e.getMessage());
 		}
 		
+	}
+	
+	public void sendSimpleMessageToAll(String temperatura) {
+		
+		List<Mail> list = mailDAO2.findAll();
+		
+		for (Mail mail : list) {
+		
+			sendSimpleMessage(mail.getMail(), "Aviso de temperatura", "La temperatura se ha excedido, temp = "+ temperatura);
+			
+		}
+			
 	}
 }
