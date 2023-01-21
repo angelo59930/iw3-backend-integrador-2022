@@ -8,7 +8,7 @@ import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 
 public interface IMailBusiness {
-
+	
 	public Mail load(long id) throws NotFoundException, BusinessException;
 
 	public Mail load(String nombre) throws NotFoundException, BusinessException;

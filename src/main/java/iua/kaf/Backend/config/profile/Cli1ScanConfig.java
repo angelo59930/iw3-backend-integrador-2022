@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     "iua.kaf.Backend.model",
     "iua.kaf.Backend.auth",
     "iua.kaf.Backend.integration",
+    "iua.kaf.Backend.model.business.IMailBusiness",
 })
 
 @Profile("cli1")

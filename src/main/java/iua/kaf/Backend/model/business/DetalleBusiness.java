@@ -22,10 +22,11 @@ public class DetalleBusiness implements IDetalleBusiness {
 	@Autowired
 	private DetalleRepository detalleDAO;
 
-	@Autowired OrdenBusiness ordenDAO;
+	@Autowired 
+	private OrdenBusiness ordenDAO;
 
 	@Autowired
-	MailBusiness mailBusiness;
+	private MailBusiness mailBusiness;
 	
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
