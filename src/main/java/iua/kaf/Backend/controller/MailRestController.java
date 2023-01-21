@@ -1,6 +1,7 @@
 package iua.kaf.Backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,20 +45,6 @@ public class MailRestController {
 
 	}
 	
-	@GetMapping(value = "/{nombre}")
-	public ResponseEntity<?> load(@PathVariable("nombre") String nombre) {
-		try {
-			return new ResponseEntity<>(mailBusiness.load(nombre), HttpStatus.OK);
-		} catch (NotFoundException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
-					HttpStatus.NOT_FOUND);
-
-		} catch (BusinessException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}	
 
 	@GetMapping()
 	public ResponseEntity<?> list() {
