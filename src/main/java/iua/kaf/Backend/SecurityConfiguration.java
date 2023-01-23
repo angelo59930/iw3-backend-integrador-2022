@@ -51,6 +51,9 @@ public class SecurityConfiguration {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 				.authorizeRequests().antMatchers(HttpMethod.POST, Constantes.URL_LOGIN).permitAll()
+				.antMatchers("/api-docs/**").permitAll()
+				.antMatchers("/swagger-ui.html").permitAll()
+				.antMatchers("/swagger-ui/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()))

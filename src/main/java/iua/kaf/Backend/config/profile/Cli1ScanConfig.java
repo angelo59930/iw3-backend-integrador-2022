@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = "iua.kaf.Backend", excludeFilters = {})
 
-// Entidades
 @EntityScan(basePackages = {
     "iua.kaf.Backend.model",
     "iua.kaf.Backend.auth",
