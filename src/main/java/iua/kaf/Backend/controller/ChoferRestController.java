@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import iua.kaf.Backend.model.Chofer;
 import iua.kaf.Backend.model.business.IChoferBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
@@ -21,6 +23,7 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
 @RequestMapping(Constantes.URL_CHOFER)
 public class ChoferRestController {
 

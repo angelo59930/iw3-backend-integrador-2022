@@ -3,7 +3,6 @@ package iua.kaf.Backend.model.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
@@ -23,10 +22,19 @@ public class DetalleBusiness implements IDetalleBusiness {
 	@Autowired
 	private DetalleRepository detalleDAO;
 
-	@Autowired OrdenBusiness ordenDAO;
+	@Autowired 
+	private OrdenBusiness ordenDAO;
 
+	@Autowired
+	private MailBusiness mailBusiness;
+	
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
+		
+		if(detalle.getTempProducto() > 300) {
+			mailBusiness.sendSimpleMessageToAll(detalle.getTempProducto()+"");
+		}
+		
 		try {
 			load(detalle.getId());
 			throw FoundException.builder().message("Se encuentró el detalle id=" + detalle.getId()).build();
