@@ -12,6 +12,7 @@ import iua.kaf.Backend.model.business.exception.ForbiddenException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
+import iua.kaf.Backend.model.persistence.AlertaRepository;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,13 @@ public class DetalleBusiness implements IDetalleBusiness {
 	@Autowired
 	private MailBusiness mailBusiness;
 	
+	@Autowired
+	private AlertaRepository alertaDAO;
+	
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
 		
-		if(detalle.getTempProducto() > 300) {
+		if(detalle.getTempProducto() > alertaDAO.getLastByOrden(detalle.getOrden().getId())) {
 			mailBusiness.sendSimpleMessageToAll(detalle.getTempProducto()+"");
 		}
 		
