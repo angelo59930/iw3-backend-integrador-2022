@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import iua.kaf.Backend.model.Cliente;
-import iua.kaf.Backend.model.business.IClienteBusiness;
+import iua.kaf.Backend.model.Alerta;
+import iua.kaf.Backend.model.business.IAlertaBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
@@ -23,21 +23,22 @@ import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping(Constantes.URL_CLIENTE)
-public class ClienteRestController {
-  
+@RequestMapping(Constantes.URL_ALERTA)
+public class AlertaRestController {
+
 	@Autowired
 	private IStandardResponseBusiness responseBusiness;
 	
-	@Autowired
-	private IClienteBusiness clienteBusiness;
 	
+	@Autowired
+	private IAlertaBusiness alertaBusiness;
+
 	@PostMapping(value = "")
-	public ResponseEntity<?> add(@RequestBody Cliente cliente){
+	public ResponseEntity<?> add(@RequestBody Alerta alerta){
 		
 		try {
 			
-			Cliente response = clienteBusiness.add(cliente);
+			Alerta response = alertaBusiness.add(alerta);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_CLIENTE + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
@@ -51,13 +52,12 @@ public class ClienteRestController {
 		
 	}
 	
-	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") long id){
 		
 		try {
 			
-			clienteBusiness.delete(id);
+			alertaBusiness.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 
@@ -75,7 +75,7 @@ public class ClienteRestController {
 		
 		try {
 			
-			return new ResponseEntity<>(clienteBusiness.load(id), HttpStatus.OK);
+			return new ResponseEntity<>(alertaBusiness.load(id), HttpStatus.OK);
 			
 
 		} catch (NotFoundException e) {
@@ -86,15 +86,15 @@ public class ClienteRestController {
 		}
 
 	}
-	
+
 	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> list(){
 		
 		try {
-			return new ResponseEntity<>(clienteBusiness.list(), HttpStatus.OK);
+			return new ResponseEntity<>(alertaBusiness.list(), HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
-	}	
-	
+	}
+
 }

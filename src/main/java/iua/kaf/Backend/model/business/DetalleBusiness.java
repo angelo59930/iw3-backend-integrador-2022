@@ -3,7 +3,6 @@ package iua.kaf.Backend.model.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import iua.kaf.Backend.model.Detalle;
@@ -13,8 +12,8 @@ import iua.kaf.Backend.model.business.exception.ForbiddenException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotAcceptableException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
+import iua.kaf.Backend.model.persistence.AlertaRepository;
 import iua.kaf.Backend.model.persistence.DetalleRepository;
-import iua.kaf.Backend.model.persistence.OrdenRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -24,10 +23,22 @@ public class DetalleBusiness implements IDetalleBusiness {
 	@Autowired
 	private DetalleRepository detalleDAO;
 
-	@Autowired OrdenBusiness ordenDAO;
+	@Autowired 
+	private OrdenBusiness ordenDAO;
 
+	@Autowired
+	private MailBusiness mailBusiness;
+	
+	@Autowired
+	private AlertaRepository alertaDAO;
+	
 	@Override
 	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException,ForbiddenException {
+		
+		if(detalle.getTempProducto() > alertaDAO.getLastByOrden(detalle.getOrden().getId())) {
+			mailBusiness.sendSimpleMessageToAll(detalle.getTempProducto()+"");
+		}
+		
 		try {
 			load(detalle.getId());
 			throw FoundException.builder().message("Se encuentró el detalle id=" + detalle.getId()).build();
