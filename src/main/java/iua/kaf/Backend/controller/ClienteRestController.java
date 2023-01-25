@@ -26,7 +26,6 @@ import iua.kaf.Backend.util.IStandardResponseBusiness;
 @RequestMapping(Constantes.URL_CLIENTE)
 public class ClienteRestController {
   
-
 	@Autowired
 	private IStandardResponseBusiness responseBusiness;
 	
@@ -96,8 +95,6 @@ public class ClienteRestController {
 		} catch (BusinessException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
-	}
-
-	
+	}	
 	
 }
