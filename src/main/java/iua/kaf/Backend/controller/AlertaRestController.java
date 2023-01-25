@@ -3,6 +3,7 @@ package iua.kaf.Backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import iua.kaf.Backend.model.Mail;
-import iua.kaf.Backend.model.business.IMailBusiness;
+import iua.kaf.Backend.model.Alerta;
+import iua.kaf.Backend.model.business.IAlertaBusiness;
 import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.FoundException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
@@ -22,50 +23,24 @@ import iua.kaf.Backend.util.IStandardResponseBusiness;
 
 @RestController
 @SecurityRequirement(name = "Bearer Authentication")
-@RequestMapping(Constantes.URL_MAIL)
-public class MailRestController {
+@RequestMapping(Constantes.URL_ALERTA)
+public class AlertaRestController {
 
 	@Autowired
 	private IStandardResponseBusiness responseBusiness;
-
+	
+	
 	@Autowired
-	private IMailBusiness mailBusiness;
+	private IAlertaBusiness alertaBusiness;
 
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> load(@PathVariable("id") long id) {
-		try {
-			return new ResponseEntity<>(mailBusiness.load(id), HttpStatus.OK);
-		} catch (NotFoundException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
-					HttpStatus.NOT_FOUND);
-
-		} catch (BusinessException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-	
-
-	@GetMapping()
-	public ResponseEntity<?> list() {
-		try {
-			return new ResponseEntity<>(mailBusiness.list(), HttpStatus.OK);
-		} catch (BusinessException e) {
-			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-	
 	@PostMapping(value = "")
-	public ResponseEntity<?> add(@RequestBody Mail mail){
+	public ResponseEntity<?> add(@RequestBody Alerta alerta){
 		
 		try {
 			
-			Mail response = mailBusiness.add(mail);
+			Alerta response = alertaBusiness.add(alerta);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_CAMION + "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_CLIENTE + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {
@@ -82,7 +57,7 @@ public class MailRestController {
 		
 		try {
 			
-			mailBusiness.delete(id);
+			alertaBusiness.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 
@@ -94,7 +69,32 @@ public class MailRestController {
 		}
 		
 	}
+	
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> load(@PathVariable("id") long id){
+		
+		try {
+			
+			return new ResponseEntity<>(alertaBusiness.load(id), HttpStatus.OK);
+			
 
-	
-	
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()), HttpStatus.NOT_FOUND);
+		
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> list(){
+		
+		try {
+			return new ResponseEntity<>(alertaBusiness.list(), HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+	}
+
 }
