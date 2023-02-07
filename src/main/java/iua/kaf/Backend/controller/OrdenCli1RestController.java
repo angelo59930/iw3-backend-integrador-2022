@@ -41,7 +41,7 @@ public class OrdenCli1RestController {
 			OrdenCli1 response = ordenCli1Business.add(orden);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_ORDEN + "/" + response.getId());
-			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 		} catch (FoundException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.FOUND, e, e.getMessage()), HttpStatus.FOUND);
@@ -94,7 +94,7 @@ public class OrdenCli1RestController {
 
       responseHeaders.set("location", Constantes.URL_ORDEN_CLI1 + "/" + response.getCodeCli1());
 
-      return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+      return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 			} catch (FoundException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.FOUND, e, e.getMessage()), HttpStatus.FOUND);
