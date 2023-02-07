@@ -82,8 +82,8 @@ public class OrdenRestController {
 	@PutMapping(value = "/pesaje-inicial/{id}")
 	public ResponseEntity<?> pesajeInicial(@PathVariable("id") long id,@RequestParam(name = "tara",required = true) double tara) {
 		try {
-			ordenBusiness.pesajeInicial(id,tara);
-			return new ResponseEntity<>(HttpStatus.OK);
+			Orden orden = ordenBusiness.pesajeInicial(id,tara);
+			return new ResponseEntity<>(orden,HttpStatus.OK);
 		} catch (NotFoundException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
 					HttpStatus.NOT_FOUND);

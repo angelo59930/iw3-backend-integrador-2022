@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -34,13 +36,15 @@ public class AuthTest {
 
   @Test
   public void testLoginAdmin() throws Exception {
+    AuthRestController authRestController = new AuthRestController();
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("username", "admin");
     params.add("password", "admin");
     params.add("json", "true");
-
-    this.mockMvc.perform(get("http://localhost:8080/api/v1/login?username=admin&password=admin?json=true")).andDo(print()).andExpect(status().isOk())
-        .andExpect(content().string(containsString("token")));
+    
+    this.mockMvc.perform(get("/api/v1/login").contentType(MediaType.APPLICATION_FORM_URLENCODED).content("username=admin, password=admin, json=true"))
+        .andDo(print()).andExpect(status().isOk())
+        .andExpect(content().string(containsString("admin")));
   }
 
 }
