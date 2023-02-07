@@ -12,6 +12,6 @@ import iua.kaf.Backend.model.Alerta;
 public interface AlertaRepository extends JpaRepository<Alerta, Long>{
 	public Optional<Alerta> findById(long id);
 
-	@Query(value = "SELECT temp_umbral FROM alertas WHERE alertas.numero_orden = ? ORDER BY alertas.id DESC LIMIT 1;", nativeQuery = true)
-	public Long getLastByOrden(long numeroOrden);
+	@Query(value = "SELECT temp_umbral FROM alertas WHERE alertas.id_orden = ? ORDER BY alertas.id DESC LIMIT 1;", nativeQuery = true)
+	public Long getLastByOrden(long id);
 }

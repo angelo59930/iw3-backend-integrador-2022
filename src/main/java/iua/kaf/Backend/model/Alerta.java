@@ -29,7 +29,7 @@ public class Alerta {
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "numero_orden", nullable = false)
+	@JoinColumn(name = "id_orden", nullable = false)
 	private Orden orden;
 	
 	@Column(nullable = true)
