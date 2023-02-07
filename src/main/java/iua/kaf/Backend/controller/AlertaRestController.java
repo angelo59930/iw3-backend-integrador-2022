@@ -40,7 +40,7 @@ public class AlertaRestController {
 			
 			Alerta response = alertaBusiness.add(alerta);
 			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set("location", Constantes.URL_CLIENTE + "/" + response.getId());
+			responseHeaders.set("location", Constantes.URL_ALERTA + "/" + response.getId());
 			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
 			
 		} catch (FoundException e) {
