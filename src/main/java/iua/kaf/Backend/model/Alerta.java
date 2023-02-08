@@ -43,4 +43,5 @@ public class Alerta {
 	
 	@Column(nullable = true)
 	private Boolean acep = false;
+	
 }

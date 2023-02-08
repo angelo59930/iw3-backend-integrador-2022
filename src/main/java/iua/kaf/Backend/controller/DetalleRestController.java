@@ -69,7 +69,7 @@ public class DetalleRestController {
 			Detalle response = detalleBusiness.add(detalle, password);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_DETALLE + "/" + response.getId());
-			return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
 
 		} catch (FoundException e) {
 			return new ResponseEntity<>(responseBusiness.build(HttpStatus.FOUND, e, e.getMessage()), HttpStatus.FOUND);

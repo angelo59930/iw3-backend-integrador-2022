@@ -11,6 +11,8 @@ public interface OrdenSlimView {
 
 	String getFechaInicioCarga();
 
+	int getNotificacion();
+
 	double getPreset();
 
 	Camion getCamion();

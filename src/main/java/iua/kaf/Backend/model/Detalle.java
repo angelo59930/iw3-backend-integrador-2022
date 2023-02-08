@@ -1,5 +1,7 @@
 package iua.kaf.Backend.model;
 
+import java.beans.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,5 +44,6 @@ public class Detalle {
   @ManyToOne()
   @JoinColumn(name = "id_orden", nullable = false)
   private Orden orden;
+
 
 }

@@ -13,10 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Builder.Default;
 
 @Entity
 @Table(name = "ordenes")
@@ -80,6 +84,9 @@ public class Orden {
 	@Column(nullable = true)
 	private long password;
 
+	@Column(nullable = true)
+	private int notificacion;
+
 	@ManyToOne
 	@JoinColumn(name = "id_camion", nullable = false)
 	private Camion camion;
@@ -95,5 +102,7 @@ public class Orden {
 	@ManyToOne
 	@JoinColumn(name = "id_producto", nullable = false)
 	private Producto producto;
+
+
 
 }

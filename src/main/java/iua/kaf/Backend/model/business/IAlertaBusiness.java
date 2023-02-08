@@ -19,5 +19,6 @@ public interface IAlertaBusiness {
 
     public void delete(long id) throws NotFoundException, BusinessException;
 
+    public Alerta acceptAlerta(Alerta alerta, String user) throws NotFoundException, BusinessException;
 	
 }

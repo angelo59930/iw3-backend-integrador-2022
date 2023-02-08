@@ -1,5 +1,6 @@
 package iua.kaf.Backend.model.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class AlertaBusiness implements IAlertaBusiness{
-	
-	@Autowired
-	private AlertaRepository alertaDAO;
+public class AlertaBusiness implements IAlertaBusiness {
 
-	public Alerta load(long id) throws NotFoundException, BusinessException {
+    @Autowired
+    private AlertaRepository alertaDAO;
+
+    public Alerta load(long id) throws NotFoundException, BusinessException {
         Optional<Alerta> r;
         try {
             r = alertaDAO.findById(id);
@@ -33,20 +34,21 @@ public class AlertaBusiness implements IAlertaBusiness{
         }
 
         return r.get();
-	}
+    }
 
-	@Override
-	public List<Alerta> list() throws BusinessException {
-		 try {
-	            return alertaDAO.findAll();
-	        } catch (Exception e) {
-	            log.error(e.getMessage(), e);
-	            throw BusinessException.builder().ex(e).build();
-	        }	}
+    @Override
+    public List<Alerta> list() throws BusinessException {
+        try {
+            return alertaDAO.findAll();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+    }
 
-	@Override
-	public Alerta add(Alerta alerta) throws FoundException, BusinessException {
-		try {
+    @Override
+    public Alerta add(Alerta alerta) throws FoundException, BusinessException {
+        try {
             load(alerta.getId());
             throw FoundException.builder().message("Se encontró la alerta con id=" + alerta.getId()).build();
         } catch (NotFoundException e) {
@@ -59,22 +61,37 @@ public class AlertaBusiness implements IAlertaBusiness{
             throw BusinessException.builder().ex(e).build();
         }
 
-	}
+    }
 
-	@Override
-	public Alerta update(Alerta alerta) throws NotFoundException, BusinessException {
-		load(alerta.getId());
+    @Override
+    public Alerta update(Alerta alerta) throws NotFoundException, BusinessException {
+        load(alerta.getId());
         try {
             return alertaDAO.save(alerta);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw BusinessException.builder().ex(e).build();
         }
-	}
+    }
 
-	@Override
-	public void delete(long id) throws NotFoundException, BusinessException {
-		load(id);
+    @Override
+    public Alerta acceptAlerta(Alerta alerta, String user) throws NotFoundException, BusinessException {
+        load(alerta.getId());
+        try {
+            alerta.setAcep(true);
+            alerta.setFechaAcep(new Date());
+            alerta.setUser(user);
+
+            return alertaDAO.save(alerta);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+    }
+
+    @Override
+    public void delete(long id) throws NotFoundException, BusinessException {
+        load(id);
         try {
             alertaDAO.deleteById(id);
         } catch (Exception e) {
