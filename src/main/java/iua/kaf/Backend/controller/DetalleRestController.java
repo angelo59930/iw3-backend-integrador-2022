@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -61,7 +62,7 @@ public class DetalleRestController {
 
 	@PostMapping(value = "/{password}")
 	public ResponseEntity<?> add(@RequestBody Detalle detalle, @PathVariable("password") long password,
-			@PathVariable("user") String user) {
+			@RequestParam("user") String user) {
 
 		try {
 
