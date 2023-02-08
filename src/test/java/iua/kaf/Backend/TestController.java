@@ -22,7 +22,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import iua.kaf.Backend.controller.CamionRestController;
+import iua.kaf.Backend.controller.ChoferRestController;
+import iua.kaf.Backend.controller.OrdenRestController;
 import iua.kaf.Backend.model.business.CamionBusiness;
+import iua.kaf.Backend.model.business.ChoferBusiness;
+import iua.kaf.Backend.model.business.OrdenBusiness;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,8 +38,20 @@ public class TestController {
   @Mock
   private CamionBusiness camionBusiness;
 
+  @Mock
+  private ChoferBusiness choferBusiness;
+
+  @Mock
+  private OrdenBusiness ordenBusiness;
+
   @InjectMocks
   private CamionRestController camionRestController;
+
+  @InjectMocks
+  private ChoferRestController choferRestController;
+
+  @InjectMocks
+  private OrdenRestController ordenRestController;
 
   @BeforeEach
   void setUp() {
@@ -43,7 +59,7 @@ public class TestController {
   }
 
   @Test
-  void testGetExample() throws Exception {
+  void testGetCamion() throws Exception {
     String token = obtainAccessToken();
 
     when(camionBusiness.list()).thenReturn(null);
@@ -56,6 +72,35 @@ public class TestController {
 
                          
   }
+
+  @Test
+  void testGetChofer() throws Exception {
+    String token = obtainAccessToken();
+
+    when(choferBusiness.list()).thenReturn(null);
+
+    mockMvc.perform(get("/api/v1/camion")
+        .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andExpect(content()
+            .contentType("application/json"));
+
+  }
+  
+  @Test
+  void testGetOrden() throws Exception {
+    String token = obtainAccessToken();
+
+    when(ordenBusiness.list()).thenReturn(null);
+
+    mockMvc.perform(get("/api/v1/camion")
+        .header("Authorization", "Bearer " + token))
+        .andExpect(status().isOk())
+        .andExpect(content()
+            .contentType("application/json"));
+
+  }
+  
 
   private String obtainAccessToken() throws Exception {
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();

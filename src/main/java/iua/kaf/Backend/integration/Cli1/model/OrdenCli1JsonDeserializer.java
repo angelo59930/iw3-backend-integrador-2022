@@ -13,7 +13,6 @@ import iua.kaf.Backend.model.business.exception.BusinessException;
 import iua.kaf.Backend.model.business.exception.NotFoundException;
 import iua.kaf.Backend.util.JsonUtiles;
 
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +50,8 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
                 "orden_codigoExterno,codigoExterno_orden,codigoExterno".split(","),
                 System.currentTimeMillis() + "");
 
-        String numeroOrden = JsonUtiles.getString(node, "orden_numeroOrden,numeroOrden_orden,numeroOrden".split(","), null);
+        String numeroOrden = JsonUtiles.getString(node, "orden_numeroOrden,numeroOrden_orden,numeroOrden".split(","),
+                null);
 
         Long parseNumOrden = Long.parseLong(numeroOrden);
 
@@ -115,6 +115,11 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
         r.setPreset(parsePreset);
 
         r.setCodeCli1(codigoExterno);
+
+        String notificacion = JsonUtiles.getString(node,
+                "orden_notificacion,notificacion_orden,notificacion".split(","), "1");
+
+        r.setNotificacion(Integer.parseInt(notificacion));
 
         return r;
     }

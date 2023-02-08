@@ -44,7 +44,7 @@ class BackendApplicationTests {
 	@Test
 	void camionTypeTest() {
 		try {
-			Assertions.assertSame(new Camion().getClass(), camionBusiness.load(1).getClass());
+			Assertions.assertSame(new Camion().getClass(), camionBusiness.load(2).getClass());
 		} catch (NotFoundException | BusinessException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ class BackendApplicationTests {
 	@Test
 	void choferTypeTest() {
 		try {
-			Assertions.assertSame(new Chofer().getClass(), choferBusiness.load(1).getClass());
+			Assertions.assertSame(new Chofer().getClass(), choferBusiness.load(3).getClass());
 		} catch (NotFoundException | BusinessException e) {
 			e.printStackTrace();
 		}
@@ -71,7 +71,7 @@ class BackendApplicationTests {
 	@Test
 	void alertaTypeTest() {
 		try {
-			Assertions.assertSame(new Alerta().getClass(), alertaBusiness.load(1).getClass());
+			Assertions.assertSame(new Alerta().getClass(), alertaBusiness.load(2).getClass());
 		} catch (NotFoundException | BusinessException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +80,7 @@ class BackendApplicationTests {
 	@Test
 	void productoTypeTest() {
 		try {
-			Assertions.assertSame(new Producto().getClass(), productoBusiness.load(1).getClass());
+			Assertions.assertSame(new Producto().getClass(), productoBusiness.load(2).getClass());
 		} catch (NotFoundException | BusinessException e) {
 			e.printStackTrace();
 		}
