@@ -149,6 +149,25 @@ public class OrdenRestController {
 
 	}
 
+	@PutMapping(value = "/activar-noti/{id}")
+	public ResponseEntity<?> activarNoti(@PathVariable("id") long id) {
+
+		try {
+
+			ordenBusiness.activarNotificacion(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.NOT_FOUND, e, e.getMessage()),
+					HttpStatus.NOT_FOUND);
+
+		} catch (BusinessException e) {
+			return new ResponseEntity<>(responseBusiness.build(HttpStatus.INTERNAL_SERVER_ERROR, e, e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") long id) {
 

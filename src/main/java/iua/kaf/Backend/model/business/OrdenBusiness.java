@@ -90,6 +90,18 @@ public class OrdenBusiness implements IOrdenBusiness {
     }
 
     @Override
+    public void activarNotificacion(long id) throws NotFoundException, BusinessException {
+        Orden o = load(id);
+        try {
+            o.setNotificacion(1);
+            ordenDAO.save(o);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.builder().ex(e).build();
+        }
+    }
+
+    @Override
     public void delete(long id) throws NotFoundException, BusinessException {
         load(id);
         try {

@@ -18,6 +18,8 @@ public interface IOrdenBusiness {
 
     public Orden add(Orden orden) throws FoundException, BusinessException;
 
+    public void activarNotificacion(long l) throws NotFoundException, BusinessException;
+
     public Orden update(Orden orden) throws NotFoundException, BusinessException;
 
     public void delete(long id) throws NotFoundException, BusinessException;
