@@ -33,8 +33,6 @@ public class DetalleRestController {
 	@Autowired
 	private IDetalleBusiness detalleBusiness;
 
-	
-
 	@GetMapping()
 	public ResponseEntity<?> list() {
 		try {
@@ -62,11 +60,12 @@ public class DetalleRestController {
 	}
 
 	@PostMapping(value = "/{password}")
-	public ResponseEntity<?> add(@RequestBody Detalle detalle, @PathVariable("password") long password) {
+	public ResponseEntity<?> add(@RequestBody Detalle detalle, @PathVariable("password") long password,
+			@PathVariable("user") String user) {
 
 		try {
 
-			Detalle response = detalleBusiness.add(detalle, password);
+			Detalle response = detalleBusiness.add(detalle, user, password);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_DETALLE + "/" + response.getId());
 			return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -84,7 +83,7 @@ public class DetalleRestController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> update(@RequestBody Detalle detalle,@PathVariable("id") long id) {
+	public ResponseEntity<?> update(@RequestBody Detalle detalle, @PathVariable("id") long id) {
 		try {
 			detalleBusiness.update(detalle, id);
 			return new ResponseEntity<>(HttpStatus.OK);

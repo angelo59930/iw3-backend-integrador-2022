@@ -11,8 +11,9 @@ import iua.kaf.Backend.model.business.exception.NotFoundException;
 
 public interface IDetalleBusiness {
   
-  public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException, ForbiddenException;
 
+  public Detalle add(Detalle detalle,String user ,long password) throws FoundException, BusinessException, ForbiddenException;
+  
   public List<Detalle> list() throws BusinessException;
   
   public Detalle load(long id) throws NotFoundException, BusinessException;

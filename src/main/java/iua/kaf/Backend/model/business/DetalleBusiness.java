@@ -32,10 +32,13 @@ public class DetalleBusiness implements IDetalleBusiness {
 	private MailBusiness mailBusiness;
 
 	@Autowired
+	private AlertaBusiness alertaBusiness;
+
+	@Autowired
 	private AlertaRepository alertaDAO;
 
 	@Override
-	public Detalle add(Detalle detalle, long password) throws FoundException, BusinessException, ForbiddenException {
+	public Detalle add(Detalle detalle,String user ,long password) throws FoundException, BusinessException, ForbiddenException {
 
 		try {
 			load(detalle.getId());
@@ -58,7 +61,7 @@ public class DetalleBusiness implements IDetalleBusiness {
 					o.setNotificacion(0);
 					ordenDAO.update(o);
 					log.error("ESTOY DENTRO DEL MANDADO DE MAIL");
-
+					alertaBusiness.acceptAlerta(alertaDAO.getLastByOrden(detalle.getOrden().getId()), user);
 				} catch (Exception e) {
 					log.error(e.getMessage(), e);
 					throw BusinessException.builder().ex(e).build();
