@@ -81,7 +81,7 @@ public class OrdenCli1JsonDeserializer extends StdDeserializer<OrdenCli1> {
 
         if (dni != 0) {
             try {
-                r.setChofer(choferBusiness.load(dni));
+                r.setChofer(choferBusiness.loadDNI(dni));
             } catch (NotFoundException | BusinessException e) {
 
             }
