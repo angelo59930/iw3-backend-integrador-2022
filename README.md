@@ -7,6 +7,7 @@ En este repositorio se podra observar todo el avance del trabajo integrador corr
 - 👨‍💻[Manfredi Angelo](https://github.com/angelo59930)
 - 👨‍💻[Yanes Kevin](https://github.com/kyanesdev)
 - 👨‍💻[Zamora Facundo](https://github.com/Faq-hue)
+- 👨‍💻[valentin Castellano]()
   
 ## [Backend] Dependencias utilizadas
 
